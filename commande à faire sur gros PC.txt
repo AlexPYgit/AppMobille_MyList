@@ -1,0 +1,4 @@
+dans un power shell faire la commande 
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+pour autoriser l'accer au fichier de config des projets 
+relance L'ide pour ne plus avoir les problème avec les imports dans IONIC
