@@ -1,7 +1,0 @@
-{
-  "name": "my_list_cours",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
