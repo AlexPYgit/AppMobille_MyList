@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Timer
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
+  <ion-progress-bar [value]="second/ dure"></ion-progress-bar>
+  <br>
+  <ion-progress-bar color="warning" [value]="zone/ nbZone"></ion-progress-bar>
+  <ion-text color="primary">
+    <h1 id="affiche">Temps: {{second}}/{{dure}} second</h1>
+    <h1 id="affiche">Nombre de zone: {{zone}}/{{nbZone}} </h1> <ion-icon *ngIf="zone === nbZone"
+      name="thumbs-up-outline"></ion-icon>
+  </ion-text>
+  <ion-toolbar>
+    <ion-button (click)="timer()"><ion-icon name="play-outline"></ion-icon> </ion-button>
+    <ion-button (click)="pause()" color="warning"><ion-icon name="pause-outline"></ion-icon></ion-button>
+    <ion-button (click)="resetTime()" color="success"><ion-icon name="refresh-outline"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ng-template #paused>
+
+</ng-template>
+
+<ion-text color="primary">
+  <h1>{{qui}} </h1>
+</ion-text>
