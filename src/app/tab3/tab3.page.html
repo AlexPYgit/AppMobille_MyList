@@ -1,37 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Paramètres
+      Mes Articles
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card [formGroup]="paramsForm">
-    <ion-header>
-      <h4 size="large">Total zones</h4>
-      <ion-item>
-        <ion-input type="number" formControlName="ZoneCtrl" value="{{zone}} "> </ion-input>
-      </ion-item>
-    </ion-header>
-    <ion-header>
 
-      <h4 size="large">Quand changer de Zones ? </h4>
-      <ion-item>
-        <ion-input type="number" formControlName="tempsDeChangementCtrl" value="{{tempsDeChangement}} "> </ion-input>
-      </ion-item>
-    </ion-header>
-    <ion-header>
+<ion-list>
+  <ion-item>
+    <ion-select interface="popover" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
+      placeholder="Selectioner une catégorie">
+      <ion-select-option value="apples">All</ion-select-option>
+      <ion-select-option value="oranges">Alimentaire</ion-select-option>
+      <ion-select-option value="bananas">hygiène</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
 
-      <h4 size="large">Pour qui ?</h4>
-      <ion-item>
-        <ion-input type="text" formControlName="quiCtrl" value="{{qui}} "> </ion-input>
-      </ion-item>
-    </ion-header>
-  </ion-card>
+<ion-content color="light">
+  <ion-list [inset]="true">
+    <ion-item *ngFor="let Produit of MesProduits">
+      <ion-button id="open-toast" shape="round" color="success" fill="outline" (click)="presentToast('top')"><ion-icon
+          name="medkit-outline"></ion-icon></ion-button>
+      <ion-input aria-label="Task name" value=" {{Produit.produit}}">
+      </ion-input>
+      <ion-input> {{Produit.prix}}€ </ion-input>
+      <ion-button class="btnManage" shape="outline" color="medium">
+        <ion-icon slot="icon-only" md="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+
+    </ion-item>
+  </ion-list>
 </ion-content>
-<ion-buttons slot="primary">
-  <ion-button fill="outline" (click)="submitForm()">
-    Enregistrer les paramètres
-    <ion-icon slot="end" name="create"></ion-icon>
-  </ion-button>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
