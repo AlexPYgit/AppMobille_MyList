@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Preferences } from '@capacitor/preferences';
-import { ToastController } from '@ionic/angular';
+import { IonModal, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { ArticleComponent } from '../component/article/article.component';
+import { OverlayEventDetail } from '@ionic/core/components';
+
 
 
 @Component({
@@ -12,31 +16,62 @@ import { ToastController } from '@ionic/angular';
 export class Tab3Page {
 
   MesProduits: any = [
-    { produit: "riz", prix: 2.5, type: "alimentaire" },
-    { produit: "pâte", prix: 1.5, type: "alimentaire" },
-    { produit: "oignons", prix: 3, type: "alimentaire" },
-    { produit: "dentifrisse", prix: 2.5, type: "hygiène" },
-    { produit: "poel", prix: 20, type: "cuisine" },
+    { produitName: "riz", prix: 2.5, type: "alimentaire" },
+    { produitName: "pâte", prix: 1.5, type: "alimentaire" },
+    { produitName: "oignons", prix: 3, type: "alimentaire" },
+    { produitName: "dentifrisse", prix: 2.5, type: "hygiène" },
+    { produitName: "poel", prix: 20, type: "cuisine" },
   ]
 
-  constructor(private fb: FormBuilder, private toastController: ToastController) { }
+  constructor(private fb: FormBuilder, private toastController: ToastController, private modalController: ModalController) { }
 
   ngOnInit() {
     // this.getParams();
   }
 
 
-
+  /**
+   * Manage to toast 
+   */
   async presentToast(position: 'top' | 'middle' | 'bottom') {
     const toast = await this.toastController.create({
       message: 'Article ajouté à la liste',
       duration: 1500,
       position: position,
       cssClass: 'toast_steel',
-
     });
 
     await toast.present();
+  }
+
+
+  /**
+  * Manage Modal
+  */
+  async presentModal(produitName?: String) {
+    const modalArticle = await this.modalController.create({
+      component: ArticleComponent,
+      componentProps: {
+        data: produitName,
+      }
+    });
+    await modalArticle.present();
+  }
+
+
+  cancel() {
+    this.modalController.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modalController.dismiss('confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      `Hello, ${ev.detail.data}!`;
+    }
   }
 
   /**

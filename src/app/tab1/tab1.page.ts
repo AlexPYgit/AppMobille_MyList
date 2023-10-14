@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 import { Platform } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-tab1',
@@ -12,9 +13,6 @@ export class Tab1Page {
   ListArticle: any = [
     { Article: "banane", qte: 1 }, { Article: "chou", qte: 2 }, { Article: "pain", qte: 2 }];
 
-  // nbZone: any = 5;
-  // zone: number = 0;
-  // pauseState: boolean = false;
 
 
   constructor(private platform: Platform) {

@@ -23,10 +23,10 @@
     <ion-item *ngFor="let Produit of MesProduits">
       <ion-button id="open-toast" shape="round" color="success" fill="outline" (click)="presentToast('top')"><ion-icon
           name="medkit-outline"></ion-icon></ion-button>
-      <ion-input aria-label="Task name" value=" {{Produit.produit}}">
+      <ion-input aria-label="Task name" value=" {{Produit.produitName}}">
       </ion-input>
       <ion-input> {{Produit.prix}}€ </ion-input>
-      <ion-button class="btnManage" shape="outline" color="medium">
+      <ion-button class="btnManage" shape="outline" color="medium" (click)="presentModal(Produit.produitName)">
         <ion-icon slot="icon-only" md="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
 
@@ -34,8 +34,6 @@
   </ion-list>
 </ion-content>
 
-<ion-fab slot="fixed" vertical="bottom" horizontal="end">
-  <ion-fab-button>
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+<ion-fab-button (click)="presentModal()" horizontal="end">
+  +
+</ion-fab-button>
