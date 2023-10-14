@@ -1,0 +1,25 @@
+.form {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+
+
+.input {
+    width: 200px;
+    color: rgb(14, 15, 15);
+    background-image: linear-gradient(to right, #82cab085, #75c0e075);
+    border-radius: 10px;
+    margin: 20px;
+
+}
+
+.test {
+    --border-radius: 20px;
+}
+
+.input .prix {
+    width: 70px
+}

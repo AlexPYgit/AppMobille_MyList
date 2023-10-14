@@ -11,9 +11,8 @@
   <ion-item>
     <ion-select interface="popover" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
       placeholder="Selectioner une catégorie">
-      <ion-select-option value="apples">All</ion-select-option>
-      <ion-select-option value="oranges">Alimentaire</ion-select-option>
-      <ion-select-option value="bananas">hygiène</ion-select-option>
+      <ion-select-option *ngFor="let categorie of listCategorie" value="apples"> {{categorie}} </ion-select-option>
+
     </ion-select>
   </ion-item>
 </ion-list>
@@ -23,10 +22,10 @@
     <ion-item *ngFor="let Produit of MesProduits">
       <ion-button id="open-toast" shape="round" color="success" fill="outline" (click)="presentToast('top')"><ion-icon
           name="medkit-outline"></ion-icon></ion-button>
-      <ion-input aria-label="Task name" value=" {{Produit.produitName}}">
+      <ion-input aria-label="Task name" value=" {{Produit.name}}">
       </ion-input>
-      <ion-input> {{Produit.prix}}€ </ion-input>
-      <ion-button class="btnManage" shape="outline" color="medium" (click)="presentModal(Produit.produitName)">
+      <ion-input> {{Produit.price}}€ </ion-input>
+      <ion-button class="btnManage" shape="outline" color="medium" (click)="presentModal(Produit)">
         <ion-icon slot="icon-only" md="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
 
@@ -34,6 +33,8 @@
   </ion-list>
 </ion-content>
 
-<ion-fab-button (click)="presentModal()" horizontal="end">
-  +
-</ion-fab-button>
+<ion-fab slot="fixed" vertical="top" horizontal="end">
+  <ion-fab-button (click)="presentModal()" horizontal="end">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

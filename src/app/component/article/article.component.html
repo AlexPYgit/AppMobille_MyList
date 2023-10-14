@@ -1,10 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{name === undefined ? 'Ajout d\'un nouvel Article': 'Mon Article "' + name + '"' }} </ion-title>
+    <ion-title> {{nameArticle === "" ? 'Ajout d\'un nouvel Article': 'Mon Article "' + nameArticle + '"' }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="close()"> close modal</ion-button>
+  <!-- <div class="form">
 
+    <form>
+      <div class="input text">
+        <ion-input fill="outline" placeholder="Nom de l'article"></ion-input>
+      </div>
+      <ion-input class="input prix" fill="outline" placeholder="Prix de l'article"></ion-input>
+      <ion-input class="input text" fill="outline" placeholder="Catégorie de l'article"></ion-input>
+    </form>
+  </div>
+  <ion-button slot="fixed" vertical="bottom" horizontal="end" (click)="close()"> close modal</ion-button> -->
+
+  <form [formGroup]="articleform" (ngSubmit)="soumettreFormulaire()">
+    <ion-item>
+      <ion-label>Nom </ion-label>
+      <ion-input formControlName="nom"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>prix </ion-label>
+      <ion-input formControlName="price"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>catégorie </ion-label>
+      <ion-input formControlName="categorie"></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="full" [disabled]="!articleform.valid">Mettre à jour</ion-button>
+    <ion-button slot="fixed" vertical="bottom" horizontal="end" (click)="close()"> close modal</ion-button>
+  </form>
 </ion-content>

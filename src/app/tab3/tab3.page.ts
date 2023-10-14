@@ -5,6 +5,8 @@ import { IonModal, ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { Article } from '../model/article';
+import { GestionArticlesService } from '../service/gestion-articles.service';
 
 
 
@@ -15,18 +17,39 @@ import { OverlayEventDetail } from '@ionic/core/components';
 })
 export class Tab3Page {
 
-  MesProduits: any = [
-    { produitName: "riz", prix: 2.5, type: "alimentaire" },
-    { produitName: "pâte", prix: 1.5, type: "alimentaire" },
-    { produitName: "oignons", prix: 3, type: "alimentaire" },
-    { produitName: "dentifrisse", prix: 2.5, type: "hygiène" },
-    { produitName: "poel", prix: 20, type: "cuisine" },
-  ]
+  article?: Article;
 
-  constructor(private fb: FormBuilder, private toastController: ToastController, private modalController: ModalController) { }
+
+
+
+  MesProduits: Array<Article> = [];
+  listCategorie: Array<String> = [];
+  CategorieSet = new Set();
+
+
+  constructor(private fb: FormBuilder, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
+
+
+
+  }
 
   ngOnInit() {
     // this.getParams();
+
+    /**
+     * récupère la liste d'article
+     */
+    this.MesProduits = this.gestionArticle.getArticles()
+
+    /**
+     *Création de la list des catégorie 
+     */
+    this.gestionArticle.getArticles().forEach(element => {
+      if (!this.CategorieSet.has(element.categorie)) {
+        this.CategorieSet.add(element.categorie)
+        this.listCategorie.push(element.categorie)
+      }
+    })
   }
 
 
@@ -48,11 +71,11 @@ export class Tab3Page {
   /**
   * Manage Modal
   */
-  async presentModal(produitName?: String) {
+  async presentModal(produit?: Article) {
     const modalArticle = await this.modalController.create({
       component: ArticleComponent,
       componentProps: {
-        data: produitName,
+        data: produit,
       }
     });
     await modalArticle.present();
