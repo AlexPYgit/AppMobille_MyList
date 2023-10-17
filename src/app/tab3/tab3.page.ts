@@ -19,9 +19,6 @@ export class Tab3Page {
 
   article?: Article;
 
-
-
-
   MesProduits: Array<Article> = [];
   listCategorie: Array<String> = [];
   CategorieSet = new Set();
@@ -34,7 +31,6 @@ export class Tab3Page {
   }
 
   ngOnInit() {
-    // this.getParams();
 
     /**
      * récupère la liste d'article
@@ -44,7 +40,7 @@ export class Tab3Page {
     /**
      *Création de la list des catégorie 
      */
-    this.gestionArticle.getArticles().forEach(element => {
+    this.MesProduits.forEach(element => {
       if (!this.CategorieSet.has(element.categorie)) {
         this.CategorieSet.add(element.categorie)
         this.listCategorie.push(element.categorie)
@@ -97,19 +93,7 @@ export class Tab3Page {
     }
   }
 
-  /**
-   * récupère les paramètres de stoquage dans la mémoire
-   */
-  // async getParams() {
-  //   const { value } = await Preferences.get({ key: 'params' });
-  //   if (value) {
-  //     const paramètres = JSON.parse(value);
-  //     this.zone = paramètres.zone,
-  //       this.tempsDeChangement = paramètres.dure,
-  //       this.qui = paramètres.qui
-  //   }
-  //   console.log(`Hello ${value}!`);
-  // }
+
 
   /**
    * fonction setParams permet de mémoriser un objet dans la mémoire 
