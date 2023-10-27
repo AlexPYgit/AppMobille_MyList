@@ -21,7 +21,7 @@
   <form [formGroup]="paramsForm" (ngSubmit)="soumettreFormulaire()">
     <ion-item>
       <ion-label>Nom </ion-label>
-      <ion-input formControlName="name"></ion-input>
+      <ion-input formControlName="name" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>prix </ion-label>
@@ -31,7 +31,8 @@
       <ion-label>catégorie </ion-label>
       <ion-input formControlName="categorie"></ion-input>
     </ion-item>
-    <ion-button type="submit" expand="full">Mettre à jour</ion-button>
+    <ion-button type="submit" expand="full"> {{nameArticle !== "" ? "Mettre à jour":"Ajouter votre article" }}
+    </ion-button>
     <ion-button slot="fixed" vertical="bottom" horizontal="end" (click)="close()"> close modal</ion-button>
   </form>
 </ion-content>

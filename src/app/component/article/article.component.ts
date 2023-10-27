@@ -20,70 +20,73 @@ export class ArticleComponent implements OnInit {
   articleform?: FormGroup;
   nameArticle?: String = "";
 
-
-
   constructor(private modalController: ModalController, private navParams: NavParams, private formBuilder: FormBuilder, private gestionArticle: GestionArticlesService) {
-
-    //  this.article = new Article();
-
-    // this.articleform = this.formBuilder.group({
-    //   name: [this.article.name, Validators.required],
-    //   price: [this.article.price, Validators.required],
-    //   categorie: [this.article.categorie, Validators.required]
-    // });
 
   }
 
+  /**
+   * configur the parma of form
+   */
   paramsForm = this.formBuilder.group({
-
     name: new FormControl(this.article.name),
-    price: new FormControl(this.article.name),
-    categorie: new FormControl(this.article.name),
+    price: new FormControl(this.article.price),
+    categorie: new FormControl(this.article.categorie),
   })
-
-
 
   ngOnInit() {
     const articleData = this.navParams.get('data');
     this.nameArticle = articleData.name;
-
     console.log(articleData)
 
+    /**
+     * get the data of the article from the liste for show in the modal
+     */
     this.paramsForm = this.formBuilder.group({
       name: [this.article.name = articleData.name],
       price: [this.article.price = articleData.price],
       categorie: [this.article.categorie = articleData.categorie]
     })
-
   }
 
   /**
-    * récupère les paramètres de stoquage dans la mémoire
-    */
-  // async getParams() {
-  //   const { value } = await Preferences.get({ key: 'params' });
-  //   if (value) {
-  //     const paramètres = JSON.parse(value);
-  //     this.zone = paramètres.zone,
-  //       this.tempsDeChangement = paramètres.dure,
-  //       this.qui = paramètres.qui
-  //   }
-  //   console.log(`Hello ${value}!`);
+   * recorde a new article in the memorie
+   */
+  soumettreFormulaire() {
+    console.log(this.paramsForm.dirty)
+    console.log("ajout d'article")
+    this.addArticle()
+  }
+
+  addArticle() {
+    this.gestionArticle.addArticle(this.makeArticleFromFormParams());
+    this.close()
+  }
+
+  /**
+   * upade an existing article in memorie
+   */
+  // updateArticle() {
+  //   console.log("je rentre dans la met pour update")
+  //   this.gestionArticle.updateArticle(this.makeArticleFromFormParams());
+  //   this.close()
   // }
 
-  soumettreFormulaire() {
-    this.gestionArticle.saveArticle();
-  }
-
-  updateArticle() {
-    if (this.paramsForm.valid) {
-      const formData = this.paramsForm.value;
-      const upDateArticle = new Article();
-      upDateArticle.name = formData.name;
+  /**
+   * get the data in form and make a new article
+   * @returns an Aricle
+   */
+  makeArticleFromFormParams() {
+    if (this.paramsForm.value.name && this.paramsForm.value.price && this.paramsForm.value.categorie) {
+      this.article.name = this.paramsForm.value.name;
+      this.article.price = this.paramsForm.value.price;
+      this.article.categorie = this.paramsForm.value.categorie;
     }
-
+    return this.article
   }
 
+  /**
+   * close the modal
+   */
   close() {
     this.modalController.dismiss();
   }

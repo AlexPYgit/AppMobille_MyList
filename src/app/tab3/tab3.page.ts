@@ -26,7 +26,8 @@ export class Tab3Page {
 
   constructor(private fb: FormBuilder, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
 
-
+    //lire la memoire
+    this.gestionArticle.getArticles()
 
   }
 
@@ -46,6 +47,18 @@ export class Tab3Page {
         this.listCategorie.push(element.categorie)
       }
     })
+  }
+
+  /**
+   * varaible 
+   */
+
+  /**
+   * Supprime un article
+   */
+  deleteArticle(idArticle: number) {
+    this.gestionArticle.deleteArticle(idArticle);
+    console.log(this.MesProduits)
   }
 
 

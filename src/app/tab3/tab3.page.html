@@ -6,13 +6,11 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-list>
   <ion-item>
     <ion-select interface="popover" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
       placeholder="Selectioner une catégorie">
       <ion-select-option *ngFor="let categorie of listCategorie" value="apples"> {{categorie}} </ion-select-option>
-
     </ion-select>
   </ion-item>
 </ion-list>
@@ -25,9 +23,13 @@
       <ion-input aria-label="Task name" value=" {{Produit.name}}">
       </ion-input>
       <ion-input> {{Produit.price}}€ </ion-input>
-      <ion-button class="btnManage" shape="outline" color="medium" (click)="presentModal(Produit)">
-        <ion-icon slot="icon-only" md="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      <ion-button class="btnManage" shape="outline" color="medium" (click)="deleteArticle(Produit.id)">
+        <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
       </ion-button>
+      <!-- <ion-button class="btnManage" shape="outline" color="medium" (click)="presentModal(Produit)">
+        <ion-icon slot="icon-only" md="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button> -->
+
 
     </ion-item>
   </ion-list>

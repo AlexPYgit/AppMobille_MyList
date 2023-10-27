@@ -6,6 +6,8 @@ export class Article {
     price?: Number = 0;
     categorie: string = "";
     isInListToBuy: Boolean = false;
+    id: number = 0;
+
 
 
     constructor() { }
