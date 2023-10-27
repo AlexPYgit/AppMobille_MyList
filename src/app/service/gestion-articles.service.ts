@@ -3,6 +3,10 @@ import { Article } from '../model/article';
 import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { resourceUsage } from 'process';
+import { IonList } from '@ionic/angular';
+import { forceUpdate } from 'ionicons/dist/types/stencil-public-runtime';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +15,31 @@ export class GestionArticlesService {
 
   article: Article = new Article();
   MesProduits: Array<Article> = [];
+  ListDeCourse: Array<Article> = [];
   MesArticlePourLesCourse: Array<Article> = [];
+  idArticle: number = 0;
+
 
   ListArticleparDefaut: any = [
-    { produitName: "riz", prix: 2.5, type: "alimentaire", id: 0 },
-    { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1 },
-    { produitName: "oignons", prix: 3, type: "alimentaire", id: 2 },
-    { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3 },
-    { produitName: "poel", prix: 20, type: "cuisine", id: 4 },
+    { produitName: "riz", prix: 2.5, type: "alimentaire", id: 0, inList: true, quantity: 1 },
+    { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 0 },
+    { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 0 },
+    { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 0 },
+    { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
   ]
 
   constructor(private formBuilder: FormBuilder) {
 
     //Enregistre une liste de produit par defauts en mémoire
-    this.ListArticleparDefaut.forEach((element: { produitName: String; prix: number; type: string; id: number }) => {
+    this.ListArticleparDefaut.forEach((element: { produitName: String; prix: number; type: string; id: number, inList: boolean, quantity: number }) => {
       this.article = new Article()
       this.article.name = element.produitName,
         this.article.price = element.prix,
         this.article.categorie = element.type,
         this.article.id = element.id,
-        this.article.isInListToBuy = false
-      this.MesProduits.push(this.article)
+        this.article.isInListToBuy = element.inList,
+        this.article.quantity = element.quantity,
+        this.MesProduits.push(this.article)
       this.saveListArticle();
     })
   }
@@ -55,7 +63,6 @@ export class GestionArticlesService {
   }
 
   addArticle(article: Article) {
-
     //on récupère l'id le plus grand des produit existant
     let id = 0;
     this.MesProduits.forEach(produit => {
@@ -63,10 +70,8 @@ export class GestionArticlesService {
         id = produit.id;
       }
     })
-    console.log(id)
     //incrémente l'id du nouvel article
     article.id = id + 1;
-    console.log(article)
     this.MesProduits.push(article);
     this.saveArticle(article);
   }
@@ -89,16 +94,21 @@ export class GestionArticlesService {
    * @param article 
    */
   deleteArticle(id: number) {
-    let idarticle!: number;
-    for (let index = 0; index < this.MesProduits.length; index++) {
-      if (this.MesProduits[index].id == id) {
-        idarticle = index;
-      }
-    }
-    this.MesProduits.splice(idarticle, 1);
+    this.MesProduits.splice(this.manageId(id), 1);
+    console.log(this.manageId(id))
     this.saveArticle(this.article);
+  }
 
-    console.log(idarticle)
+  /**
+   * update la variable inList si l'article est dans la liste ou non
+   */
+  inList(article: Article) {
+    //this.manageId(article.id);
+    let articleUpadte = new Article();
+    articleUpadte = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
+    console.log(articleUpadte);
+
+    this.saveArticle(articleUpadte);
   }
 
   /**
@@ -156,6 +166,17 @@ export class GestionArticlesService {
     })
   }
 
+  /**
+   * manage les id des article
+   */
+  manageId(id: number): number {
+    for (let index = 0; index < this.MesProduits.length; index++) {
+      if (this.MesProduits[index].id == id) {
+        this.idArticle = id;
+      }
+    }
+    return this.idArticle;
+  }
 
 }
 

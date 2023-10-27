@@ -1,6 +1,9 @@
 import { Component, Input, } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 import { Platform } from '@ionic/angular';
+import { GestionArticlesService } from '../service/gestion-articles.service';
+import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -10,22 +13,37 @@ import { Platform } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  ListArticle: any = [
-    { Article: "banane", qte: 1 }, { Article: "chou", qte: 2 }, { Article: "pain", qte: 2 }];
+  ListArticle: any = [];
 
 
 
-  constructor(private platform: Platform) {
-    this.platform.ready().then(() => {
-      // this.audio = new Audio();
-      // this.audio.src = "assets/song/BELLHand_Clochette.mp3";
-      // this.audio.load();
-    })
+  constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
+    // this.platform.ready().then(() => {
+    //   // this.audio = new Audio();
+    //   // this.audio.src = "assets/song/BELLHand_Clochette.mp3";
+    //   // this.audio.load();
+    // })
+
+    this.getArticleInList()
+    // console.log(this.ListArticle)
   }
 
-  // ngOninit() {
-  //   this.checkParams();
+  // ngOnInit() {
+  //   this.getArticleInList()
   // }
+
+  /**
+   * récupère les article mit dans la list de course
+   */
+  getArticleInList() {
+    let list = this.gestionArticle.getArticles();
+    list.forEach(element => {
+      if (element.isInListToBuy === true) {
+        this.ListArticle.push(element)
+      }
+    });
+
+  }
 
   ionViewWillEnter(): void {
     Preferences.get({ key: 'params' }).then((data) => {
@@ -37,7 +55,6 @@ export class Tab1Page {
         console.log(paramètres);
       }
     });
-
   }
 
   /**

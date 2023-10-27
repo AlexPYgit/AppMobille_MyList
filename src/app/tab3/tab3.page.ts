@@ -22,6 +22,8 @@ export class Tab3Page {
   MesProduits: Array<Article> = [];
   listCategorie: Array<String> = [];
   CategorieSet = new Set();
+  addList: boolean = true;
+
 
 
   constructor(private fb: FormBuilder, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
@@ -52,6 +54,10 @@ export class Tab3Page {
   /**
    * varaible 
    */
+  addingList(article: Article) {
+    this.gestionArticle.inList(article)
+  }
+
 
   /**
    * Supprime un article

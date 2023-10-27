@@ -13,8 +13,22 @@
   <ion-list [inset]="true">
     <ion-item *ngFor="let articles of ListArticle">
       <ion-checkbox slot="start" aria-label="Toggle task completion"> </ion-checkbox>
-      <ion-input aria-label="Task name" value=" {{articles.Article}}"> </ion-input>
-      <ion-text> {{articles.qte}} </ion-text>
+      <ion-card aria-label="Task name">
+        <ion-skeleton-text animated style="width: 50%">pas d'article à acheter</ion-skeleton-text>
+      </ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text> {{articles.name}} </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text> {{articles.quantity}} </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text> {{articles.price}}€ </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
 </ion-content>

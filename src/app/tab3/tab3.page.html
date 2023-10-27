@@ -18,8 +18,17 @@
 <ion-content color="light">
   <ion-list [inset]="true">
     <ion-item *ngFor="let Produit of MesProduits">
-      <ion-button id="open-toast" shape="round" color="success" fill="outline" (click)="presentToast('top')"><ion-icon
-          name="medkit-outline"></ion-icon></ion-button>
+      <div *ngIf="!Produit.isInListToBuy">
+        <ion-button (click)="addingList(Produit)" id="open-toast" shape="round" color="medium" fill="outline"
+          (click)="presentToast('top')">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <div *ngIf="Produit.isInListToBuy">
+        <ion-button shape="round" color="success" fill="outline">
+          <ion-icon color="success" name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </div>
       <ion-input aria-label="Task name" value=" {{Produit.name}}">
       </ion-input>
       <ion-input> {{Produit.price}}€ </ion-input>
@@ -29,7 +38,6 @@
       <!-- <ion-button class="btnManage" shape="outline" color="medium" (click)="presentModal(Produit)">
         <ion-icon slot="icon-only" md="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button> -->
-
 
     </ion-item>
   </ion-list>
