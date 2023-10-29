@@ -40,7 +40,7 @@ export class GestionArticlesService {
         this.article.isInListToBuy = element.inList,
         this.article.quantity = element.quantity,
         this.MesProduits.push(this.article)
-      this.saveListArticle();
+      this.saveArticle(this.article);
     })
   }
 
@@ -112,13 +112,18 @@ export class GestionArticlesService {
   }
 
   /**
-   * persistence on mobille with préférence capactior
+   * add article in list of course to buy
    */
-  private async saveListArticle() {
-    await Preferences.set({
-      key: 'artilces',
-      value: JSON.stringify(this.MesProduits)
-    })
+  addInListToBuy() {
+    //ajouter l'article quand la variable isInList passe a true
+  }
+
+  /**
+   * get article in list to buy
+   */
+  getListTobuy() {
+    // retourne le tableau   MesArticlePourLesCourse avec les articles dedans
+    //mettre la quantité voulu 
   }
 
   /**
