@@ -31,25 +31,17 @@ export class Tab3Page {
     //lire la memoire
     this.gestionArticle.getArticles()
 
-  }
-
-  ngOnInit() {
-
     /**
-     * récupère la liste d'article
-     */
+      * récupère la liste d'article
+      */
     this.MesProduits = this.gestionArticle.getArticles()
-
-    /**
-     *Création de la list des catégorie 
-     */
-    this.MesProduits.forEach(element => {
-      if (!this.CategorieSet.has(element.categorie)) {
-        this.CategorieSet.add(element.categorie)
-        this.listCategorie.push(element.categorie)
-      }
-    })
   }
+
+  ionViewWillEnter() {
+    console.log('appel auto')
+  }
+
+
 
   /**
    * varaible 
@@ -57,7 +49,6 @@ export class Tab3Page {
   addingList(article: Article) {
     this.gestionArticle.inList(article)
   }
-
 
   /**
    * Supprime un article
@@ -67,7 +58,17 @@ export class Tab3Page {
     console.log(this.MesProduits)
   }
 
-
+  /**
+   * créer la list de catégorie
+   */
+  getCategorie() {
+    this.MesProduits.forEach(element => {
+      if (!this.CategorieSet.has(element.categorie)) {
+        this.CategorieSet.add(element.categorie)
+        this.listCategorie.push(element.categorie)
+      }
+    })
+  }
   /**
    * Manage to toast 
    */
@@ -81,7 +82,6 @@ export class Tab3Page {
 
     await toast.present();
   }
-
 
   /**
   * Manage Modal
@@ -113,38 +113,4 @@ export class Tab3Page {
   }
 
 
-
-  /**
-   * fonction setParams permet de mémoriser un objet dans la mémoire 
-   * local en utilisant capicitor/Préférence
-   */
-  // setParams = async () => {
-  //   await Preferences.set({
-  //     key: 'params',
-  //     value: JSON.stringify(
-  //       {
-  //         zone: this.paramsForm.value.ZoneCtrl,
-  //         dure: this.paramsForm.value.tempsDeChangementCtrl,
-  //         qui: this.paramsForm.value.quiCtrl
-  //       }
-  //     )
-  //   });
-  // };
-
-  /**
-   * sbmitForm execute la fonction setParams()
-  //  */
-  // submitForm() {
-  //   console.log(this.paramsForm.value)
-  //   this.setParams();
-  // }
-
-  /**
-   * Formulaire de paramètres
-   */
-  // paramsForm = this.fb.group({
-  //   ZoneCtrl: new FormControl(this.zone),
-  //   tempsDeChangementCtrl: new FormControl(this.tempsDeChangement),
-  //   quiCtrl: new FormControl(this.qui),
-  // });
 }

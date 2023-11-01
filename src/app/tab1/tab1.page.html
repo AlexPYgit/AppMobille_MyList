@@ -11,25 +11,32 @@
 </ion-header>
 <ion-content color="light">
   <ion-list [inset]="true">
-    <ion-item *ngFor="let articles of ListArticle">
-      <ion-checkbox [(ngModel)]="indeterminate" (ngModelChange)="onIndeterminateChange($event)" slot="start"
-        aria-label="Toggle task completion"> </ion-checkbox>
-      <ion-card aria-label="Task name">
-        <ion-skeleton-text animated style="width: 50%">pas d'article à acheter</ion-skeleton-text>
-      </ion-card>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-text> {{articles.name}} </ion-text>
-          </ion-col>
-          <ion-col>
-            <ion-text> {{articles.quantity}} </ion-text>
-          </ion-col>
-          <ion-col>
-            <ion-text> {{articles.price}}€ </ion-text>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
+    <div *ngIf="ListArticle.length !== 0 ">
+      <ion-item *ngFor="let articles of ListArticle">
+        <ion-checkbox [(ngModel)]="indeterminate" (ngModelChange)="onIndeterminateChange($event, articles)" slot="start"
+          aria-label="Toggle task completion"> </ion-checkbox>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-text> {{articles.name}} </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text> {{articles.quantity}} </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text> {{articles.price}}€ </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </div>
+    <div *ngIf="ListArticle.length === 0 ">
+      <ion-row>
+        <ion-col>
+          <ion-text id="list"> Ma Liste est vide ! </ion-text>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </div>
   </ion-list>
 </ion-content>

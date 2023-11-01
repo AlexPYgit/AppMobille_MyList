@@ -35,6 +35,7 @@ export class Tab1Page {
   }
 
   ionViewWillEnter(): void {
+    this.Montant = 0;
     this.getArticleInList()
     this.montantTotal()
   }
@@ -49,10 +50,11 @@ export class Tab1Page {
   }
 
   //retire l'article de la liste si la checkbox est coché
-  onIndeterminateChange(event: any) {
-
-
+  onIndeterminateChange(event: any, artcile: Article) {
+    this.gestionArticle.inList(artcile)
     console.log('La variable indeterminate a changé :', event);
+    this.indeterminate = !event;
+    this.ionViewWillEnter()
   }
 
 }
