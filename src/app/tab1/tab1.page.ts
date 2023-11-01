@@ -15,21 +15,44 @@ import { Article } from '../model/article';
 export class Tab1Page {
 
   ListArticle: Array<Article> = [];
+  Montant: number = 0;
+  indeterminate: boolean = false;
 
   constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
-    //this.getArticleInList()
+    this.ionViewWillEnter()
   }
 
   /**
    * récupère les article mit dans la list de course
    */
   getArticleInList() {
-    // faire le service pour gérer la liste d'article à afficher tab 1 
+    this.ListArticle = [];
+    this.gestionArticle.getArticles().forEach(element => {
+      if (element.isInListToBuy) {
+        this.ListArticle.push(element)
+      }
+    })
   }
 
-
   ionViewWillEnter(): void {
-    this.getArticleInList();
+    this.getArticleInList()
+    this.montantTotal()
+  }
+
+  montantTotal(): number {
+    this.ListArticle.forEach(element => {
+      if (element.price) {
+        this.Montant = this.Montant + element.price;
+      }
+    })
+    return this.Montant;
+  }
+
+  //retire l'article de la liste si la checkbox est coché
+  onIndeterminateChange(event: any) {
+
+
+    console.log('La variable indeterminate a changé :', event);
   }
 
 }

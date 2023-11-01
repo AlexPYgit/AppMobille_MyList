@@ -5,14 +5,15 @@
     </ion-title>
   </ion-toolbar>
   <div id="top-screen">
-    <div id="info-top-screen">NB d'article </div>
-    <div id="info-top-screen"> € Total</div>
+    <div id="info-top-screen">NB d'article : {{ListArticle.length}}</div>
+    <div id="info-top-screen">Total = {{Montant}}€ </div>
   </div>
 </ion-header>
 <ion-content color="light">
   <ion-list [inset]="true">
     <ion-item *ngFor="let articles of ListArticle">
-      <ion-checkbox slot="start" aria-label="Toggle task completion"> </ion-checkbox>
+      <ion-checkbox [(ngModel)]="indeterminate" (ngModelChange)="onIndeterminateChange($event)" slot="start"
+        aria-label="Toggle task completion"> </ion-checkbox>
       <ion-card aria-label="Task name">
         <ion-skeleton-text animated style="width: 50%">pas d'article à acheter</ion-skeleton-text>
       </ion-card>

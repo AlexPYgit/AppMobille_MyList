@@ -112,21 +112,6 @@ export class GestionArticlesService {
   }
 
   /**
-   * add article in list of course to buy
-   */
-  addInListToBuy() {
-    //ajouter l'article quand la variable isInList passe a true
-  }
-
-  /**
-   * get article in list to buy
-   */
-  getListTobuy() {
-    // retourne le tableau   MesArticlePourLesCourse avec les articles dedans
-    //mettre la quantité voulu 
-  }
-
-  /**
  * persistence on mobille with préférence capactior
  */
   async saveArticle(article: Article) {
@@ -154,7 +139,7 @@ export class GestionArticlesService {
    */
   soumettreFormulaire() {
     this.setParamsForm();
-    console.log('Informations utilisateur mises àen mémoire :', this.article);
+    console.log('Informations utilisateur mises en mémoire :', this.article);
   }
 
   /**
