@@ -7,6 +7,7 @@ import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../model/article';
 import { GestionArticlesService } from '../service/gestion-articles.service';
+import { CategorieArticleService } from '../service/categorie-article.service';
 
 
 
@@ -18,33 +19,49 @@ import { GestionArticlesService } from '../service/gestion-articles.service';
 export class Tab3Page {
 
   article?: Article;
-
+  Categories: Array<string> = [];
   MesProduits: Array<Article> = [];
-  listCategorie: Array<String> = [];
   CategorieSet = new Set();
   addList: boolean = true;
 
 
 
-  constructor(private fb: FormBuilder, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
+  constructor(private categorieService: CategorieArticleService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
 
-    //lire la memoire
-    this.gestionArticle.getArticles()
 
     /**
       * récupère la liste d'article
       */
     this.MesProduits = this.gestionArticle.getArticles()
+
+    /**
+     * appelle le service pour faire la liste catégories
+     */
+
+    this.Categories = categorieService.getCategory(this.MesProduits)
+
   }
 
   ionViewWillEnter() {
     console.log('appel auto')
+
   }
 
 
+  ///CATEGORIES
+
 
   /**
-   * varaible 
+   *filtre des categories 
+   */
+  handleCategory(ev: any) {
+    console.log(ev.target.value);
+  }
+
+  ///END CATEGORIES
+
+  /**
+   * variable  de présnce dans la liste
    */
   addingList(article: Article) {
     this.gestionArticle.inList(article)
@@ -58,17 +75,7 @@ export class Tab3Page {
     console.log(this.MesProduits)
   }
 
-  /**
-   * créer la list de catégorie
-   */
-  getCategorie() {
-    this.MesProduits.forEach(element => {
-      if (!this.CategorieSet.has(element.categorie)) {
-        this.CategorieSet.add(element.categorie)
-        this.listCategorie.push(element.categorie)
-      }
-    })
-  }
+
   /**
    * Manage to toast 
    */

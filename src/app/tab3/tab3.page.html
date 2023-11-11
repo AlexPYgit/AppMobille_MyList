@@ -8,9 +8,10 @@
 
 <ion-list>
   <ion-item>
-    <ion-select interface="popover" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
-      placeholder="Selectioner une catégorie">
-      <ion-select-option *ngFor="let categorie of listCategorie" value="apples"> {{categorie}} </ion-select-option>
+    <ion-select interface="interface" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
+      placeholder="Selectioner une catégorie" (ionChange)="handleCategory($event)">
+      <ion-select-option *ngFor="let categorie of Categories" [value]="categorie"> {{categorie}}
+      </ion-select-option>
     </ion-select>
   </ion-item>
 </ion-list>
