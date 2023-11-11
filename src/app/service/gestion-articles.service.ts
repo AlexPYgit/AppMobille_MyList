@@ -6,6 +6,7 @@ import { resourceUsage } from 'process';
 import { IonList } from '@ionic/angular';
 import { forceUpdate } from 'ionicons/dist/types/stencil-public-runtime';
 import { BehaviorSubject } from 'rxjs';
+import { CategorieArticleService } from './categorie-article.service';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class GestionArticlesService {
 
   article: Article = new Article();
   MesProduits: Array<Article> = [];
+  Categories: Array<string> = [];
   ListDeCourse: Array<Article> = [];
   MesArticlePourLesCourse: Array<Article> = [];
   idArticle: number = 0;
@@ -28,7 +30,7 @@ export class GestionArticlesService {
     { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
   ]
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
 
     //Enregistre une liste de produit par defauts en mémoire
     this.ListArticleparDefaut.forEach((element: { produitName: String; prix: number; type: string; id: number, inList: boolean, quantity: number }) => {
@@ -42,6 +44,8 @@ export class GestionArticlesService {
         this.MesProduits.push(this.article)
       this.saveArticle(this.article);
     })
+
+    this.Categories = categorieService.getCategory(this.MesProduits);
   }
 
   /**
@@ -73,6 +77,7 @@ export class GestionArticlesService {
     //incrémente l'id du nouvel article
     article.id = id + 1;
     this.MesProduits.push(article);
+    this.categorieService.getCategory(this.MesProduits);
     this.saveArticle(article);
   }
 

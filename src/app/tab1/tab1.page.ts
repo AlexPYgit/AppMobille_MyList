@@ -43,7 +43,8 @@ export class Tab1Page {
   montantTotal(): number {
     this.ListArticle.forEach(element => {
       if (element.price) {
-        this.Montant = this.Montant + element.price;
+        let atriclePrice: Number = element.price;
+        this.Montant = (this.Montant + Number(atriclePrice));
       }
     })
     return this.Montant;

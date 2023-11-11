@@ -9,7 +9,8 @@
 <ion-list>
   <ion-item>
     <ion-select interface="interface" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
-      placeholder="Selectioner une catégorie" (ionChange)="handleCategory($event)">
+      placeholder="Selectioner une catégorie" [(ngModel)]="selectedCategory" (ionChange)="handleCategory($event)">
+      <ion-select-option value="All"> All </ion-select-option>
       <ion-select-option *ngFor="let categorie of Categories" [value]="categorie"> {{categorie}}
       </ion-select-option>
     </ion-select>
@@ -18,7 +19,7 @@
 
 <ion-content color="light">
   <ion-list [inset]="true">
-    <ion-item *ngFor="let Produit of MesProduits">
+    <ion-item *ngFor="let Produit of filteredArticles">
       <div *ngIf="!Produit.isInListToBuy">
         <ion-button (click)="addingList(Produit)" id="open-toast" shape="round" color="medium" fill="outline"
           (click)="presentToast('top')">

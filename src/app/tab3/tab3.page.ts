@@ -21,9 +21,9 @@ export class Tab3Page {
   article?: Article;
   Categories: Array<string> = [];
   MesProduits: Array<Article> = [];
-  CategorieSet = new Set();
   addList: boolean = true;
-
+  selectedCategory: string = "";
+  filteredArticles: any[] = [];
 
 
   constructor(private categorieService: CategorieArticleService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
@@ -32,30 +32,34 @@ export class Tab3Page {
     /**
       * récupère la liste d'article
       */
-    this.MesProduits = this.gestionArticle.getArticles()
+    this.MesProduits = this.gestionArticle.MesProduits;
 
     /**
-     * appelle le service pour faire la liste catégories
+     * appelle la liste catégories du service gestion aticle
      */
 
-    this.Categories = categorieService.getCategory(this.MesProduits)
+    this.Categories = this.gestionArticle.Categories;
+
+    this.filteredArticles = this.MesProduits;
 
   }
+
 
   ionViewWillEnter() {
     console.log('appel auto')
-
   }
-
-
-  ///CATEGORIES
-
 
   /**
    *filtre des categories 
    */
   handleCategory(ev: any) {
-    console.log(ev.target.value);
+    if (this.selectedCategory) {
+      this.filteredArticles = this.MesProduits.filter(produit => produit.categorie === this.selectedCategory);
+    } else if (this.selectedCategory == "All") {
+      this.filteredArticles = [...this.MesProduits];
+      console.log(this.filteredArticles, "et Mes prof : ", this.MesProduits);
+    }
+    console.log(ev.target.value)
   }
 
   ///END CATEGORIES
@@ -118,6 +122,5 @@ export class Tab3Page {
       `Hello, ${ev.detail.data}!`;
     }
   }
-
 
 }
