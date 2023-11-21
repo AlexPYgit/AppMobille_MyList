@@ -24,9 +24,9 @@ export class GestionArticlesService {
 
   ListArticleparDefaut: any = [
     { produitName: "riz", prix: 2.5, type: "alimentaire", id: 0, inList: true, quantity: 1 },
-    { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 0 },
-    { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 0 },
-    { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 0 },
+    { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 1 },
+    { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 1 },
+    { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 1 },
     { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
   ]
 
@@ -76,6 +76,7 @@ export class GestionArticlesService {
     })
     //incrémente l'id du nouvel article
     article.id = id + 1;
+    article.quantity = 1 //quantité de l'article par default
     this.MesProduits.push(article);
     this.categorieService.getCategory(this.MesProduits);
     this.saveArticle(article);

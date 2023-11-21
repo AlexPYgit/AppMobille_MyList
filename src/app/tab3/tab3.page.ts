@@ -1,13 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Preferences } from '@capacitor/preferences';
-import { IonModal, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../model/article';
 import { GestionArticlesService } from '../service/gestion-articles.service';
-import { CategorieArticleService } from '../service/categorie-article.service';
 
 
 
@@ -26,7 +23,7 @@ export class Tab3Page {
   filteredArticles: any[] = [];
 
 
-  constructor(private categorieService: CategorieArticleService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
+  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
 
 
     /**
@@ -53,13 +50,11 @@ export class Tab3Page {
    *filtre des categories 
    */
   handleCategory(ev: any) {
-    if (this.selectedCategory) {
+    if (this.selectedCategory != "All") {
       this.filteredArticles = this.MesProduits.filter(produit => produit.categorie === this.selectedCategory);
-    } else if (this.selectedCategory == "All") {
+    } else {
       this.filteredArticles = [...this.MesProduits];
-      console.log(this.filteredArticles, "et Mes prof : ", this.MesProduits);
     }
-    console.log(ev.target.value)
   }
 
   ///END CATEGORIES
@@ -106,7 +101,6 @@ export class Tab3Page {
     });
     await modalArticle.present();
   }
-
 
   cancel() {
     this.modalController.dismiss(null, 'cancel');
