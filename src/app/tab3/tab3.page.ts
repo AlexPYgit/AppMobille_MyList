@@ -67,7 +67,7 @@ ionViewWillEnter(): void {
       this.gestionArticle.getArticles().forEach(element => {
         if (element.isInListToBuy && element.price) {
           console.log(element)
-          this.montant =+ this.montant + element.price;
+          this.montant = Number( this.montant) + Number(element.price)
         }
       })
 
