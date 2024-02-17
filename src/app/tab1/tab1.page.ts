@@ -3,7 +3,7 @@ import { Preferences } from '@capacitor/preferences';
 import { Platform } from '@ionic/angular';
 import { GestionArticlesService } from '../service/gestion-articles.service';
 import { Subscription } from 'rxjs';
-import { Article } from '../model/article';
+import { Article } from '../models/article';
 
 
 

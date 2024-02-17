@@ -1,23 +1,32 @@
-* {
-    color: rgb(32, 32, 32);
+
+.header-md::after{
+    display: none;
 }
 
-app-tab1 {
-    background-color: aquamarine;
+
+.inner-scroll{background-color: white  !important;}
+
+.style-title{
+    font-weight: 600;
+    color: white;
+    padding: 20px;
+    background-color: #3b9a75;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #top-screen {
     display: flex;
     justify-content: space-between;
+ 
 }
 
 #info-top-screen {
     padding: 10px 10px;
     margin: 10px 15px;
     border-radius: 10px;
-    box-shadow: 2px 2px 5px 0px rgb(255, 210, 238);
-    color: rgb(152, 81, 19);
-    background-color: antiquewhite;
+    // box-shadow: 2px 2px 5px 0px rgb(255, 210, 238);
+    color: #322512;
+    background-color: #fff2d9;
 }
 
 #list {
@@ -25,9 +34,8 @@ app-tab1 {
 }
 
 #imgHeader {
-    background-image: url(/../../assets/fuirt\ et\ legume.jpg);
+    // background-image: url(/../../assets/fuirt\ et\ legume.jpg);
     background-size: 65%;
-
 }
 
 .itemCours {

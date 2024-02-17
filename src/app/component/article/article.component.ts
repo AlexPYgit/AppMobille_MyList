@@ -2,12 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Article } from 'src/app/model/article';
+import { Article } from 'src/app/models/article';
 import { GestionArticlesService } from 'src/app/service/gestion-articles.service';
 import { Preferences } from '@capacitor/preferences';
-
-
-
 
 @Component({
   selector: 'app-article',

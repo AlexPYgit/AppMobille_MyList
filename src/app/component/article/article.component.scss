@@ -1,25 +1,75 @@
-.form {
+.style_AddArticle {
     display: flex;
     justify-content: center;
     height: 100%;
+ 
+}
+
+.style-title{
+    font-weight: 600;
+    color: white;
+    padding: 20px;
+    background-color: #3b9a75;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+form{
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
 }
 
 
 
-.input {
+input {
     width: 200px;
     color: rgb(14, 15, 15);
     background-image: linear-gradient(to right, #82cab085, #75c0e075);
     border-radius: 10px;
     margin: 20px;
+    border: none;
+    padding: 15px;
+    
 
-}
-
-.test {
-    --border-radius: 20px;
 }
 
 .input .prix {
     width: 70px
 }
+
+.style_AddArticle{
+    background-color: #fff2d9;
+}
+
+.addArticle{
+    // background-image: linear-gradient(to right, #82cab085, #75c0e075);
+    background-color: #32906c;
+    border-radius: 8px;    
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: white;
+    border: none;   
+    // color: #30532a;
+}
+
+.noAdd{
+    position: relative;
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color:  #ef6c54;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+
+}
+
+

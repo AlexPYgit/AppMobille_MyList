@@ -3,7 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { Article } from '../model/article';
+import { Article } from '../models/article';
 import { GestionArticlesService } from '../service/gestion-articles.service';
 
 
@@ -20,16 +20,16 @@ export class Tab3Page {
   MesProduits: Array<Article> = [];
   addList: boolean = true;
   selectedCategory: string = "";
-  filteredArticles: any[] = [];
+  filteredArticles: Article[] = [];
+  nomberArticleByItem : number = 0;
 
 
   constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
 
-
     /**
       * récupère la liste d'article
       */
-    this.MesProduits = this.gestionArticle.MesProduits;
+    // this.MesProduits = this.gestionArticle.MesProduits;
 
     /**
      * appelle la liste catégories du service gestion aticle
@@ -37,19 +37,14 @@ export class Tab3Page {
 
     this.Categories = this.gestionArticle.Categories;
 
-    this.filteredArticles = this.MesProduits;
+    this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
 
-  }
-
-
-  ionViewWillEnter() {
-    console.log('appel auto')
   }
 
   /**
    *filtre des categories 
    */
-  handleCategory(ev: any) {
+  handleCategory() {
     if (this.selectedCategory != "All") {
       this.filteredArticles = this.MesProduits.filter(produit => produit.categorie === this.selectedCategory);
     } else {
@@ -71,19 +66,21 @@ export class Tab3Page {
    */
   deleteArticle(idArticle: number) {
     this.gestionArticle.deleteArticle(idArticle);
-    console.log(this.MesProduits)
+    console.log("id de l'article suprimmer", idArticle)
+    this.filteredArticles = this.gestionArticle.MesProduits;
+
   }
 
 
   /**
    * Manage to toast 
    */
-  async presentToast(position: 'top' | 'middle' | 'bottom') {
+  async presentToast(position: 'top' | 'middle' | 'bottom', action : string) {
     const toast = await this.toastController.create({
-      message: 'Article ajouté à la liste',
+      message: `Article ${action} la liste`,
       duration: 1500,
       position: position,
-      cssClass: 'toast_steel',
+      color : "success",
     });
 
     await toast.present();
@@ -117,4 +114,21 @@ export class Tab3Page {
     }
   }
 
+  // Method to increment the value of number aritcles by item
+  incrementQuantity(article: Article) {
+    article.quantity++; // Incrémenter la quantité de l'article
+  }
+
+  // Method to decrement the value, with a check to avoid negative values of number aritcles by item
+  decrementQuantity(article: Article) {
+    if (article.quantity > 0) {
+      article.quantity--; // Décrémenter la quantité de l'article si elle est supérieure à 0
+    }
+  }
+
+  updateQuantity(event: any, article: any) {
+    // Mettre à jour la quantité de l'article lorsqu'il y a un changement dans l'entrée
+    const value = event.target.value;
+    article.number = value;
+  }
 }

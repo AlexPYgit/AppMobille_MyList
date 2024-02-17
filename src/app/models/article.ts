@@ -2,7 +2,7 @@ import { flush } from "@angular/core/testing";
 
 export class Article {
     name: String = "";
-    price?: number = 0;
+    price?: number;
     categorie: string = "";
     isInListToBuy: Boolean = false;
     id: number = 0;

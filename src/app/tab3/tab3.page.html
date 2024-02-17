@@ -1,6 +1,6 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="style-title">
   <ion-toolbar>
-    <ion-title>
+    <ion-title class="style-title">
       Mes Articles
     </ion-title>
   </ion-toolbar>
@@ -9,7 +9,7 @@
 <ion-list>
   <ion-item>
     <ion-select interface="interface" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
-      placeholder="Selectioner une catégorie" [(ngModel)]="selectedCategory" (ionChange)="handleCategory($event)">
+      placeholder="Selectioner une catégorie" [(ngModel)]="selectedCategory" (ionChange)="handleCategory()">
       <ion-select-option value="All"> All </ion-select-option>
       <ion-select-option *ngFor="let categorie of Categories" [value]="categorie"> {{categorie}}
       </ion-select-option>
@@ -24,7 +24,7 @@
           <ion-col size="2">
             <div *ngIf="!Produit.isInListToBuy">
             <ion-button (click)="addingList(Produit)" id="open-toast" shape="round" color="medium" fill="outline"
-              (click)="presentToast('top')">
+              (click)="presentToast('top', 'ajouté à')">
               <ion-icon name="medkit-outline"></ion-icon>
             </ion-button>
           </div>
@@ -40,10 +40,17 @@
           <ion-col>
             <ion-text> {{Produit.price}}€ </ion-text>
           </ion-col>
+          <!-- <ion-col>
+            <ion-item lines="none">
+              <ion-button fill="clear" (click)="decrementQuantity(Produit)">-</ion-button>
+              <ion-input type="number" [(ngModel)]="Produit.quantity" (ionChange)="updateQuantity($event, Produit)">  </ion-input>
+              <ion-button fill="clear" (click)="incrementQuantity(Produit)">+</ion-button>
+            </ion-item>
+          </ion-col> -->
          
         </ion-row>
       </ion-grid>
-        <ion-button class="btnManage" shape="outline" color="medium" (click)="deleteArticle(Produit.id)">
+        <ion-button class="btnManage" shape="outline" color="medium" (click)="deleteArticle(Produit.id)" (click)="presentToast('top', 'supprimé de')">
           <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
         </ion-button>
     </ion-item>

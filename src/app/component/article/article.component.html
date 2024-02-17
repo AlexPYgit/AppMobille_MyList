@@ -1,38 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title> {{nameArticle === "" ? 'Ajout d\'un nouvel Article': 'Mon Article "' + nameArticle + '"' }}
+  <ion-toolbar >
+    <ion-title class="style-title"> {{nameArticle === "" ? 'Ajout d\'un nouvel Article': 'Mon Article "' + nameArticle + '"' }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- <div class="form">
-
-    <form>
-      <div class="input text">
-        <ion-input fill="outline" placeholder="Nom de l'article"></ion-input>
-      </div>
-      <ion-input class="input prix" fill="outline" placeholder="Prix de l'article"></ion-input>
-      <ion-input class="input text" fill="outline" placeholder="Catégorie de l'article"></ion-input>
-    </form>
-  </div>
-  <ion-button slot="fixed" vertical="bottom" horizontal="end" (click)="close()"> close modal</ion-button> -->
-
+<content class="style_AddArticle">
   <form [formGroup]="paramsForm" (ngSubmit)="soumettreFormulaire()">
-    <ion-item>
-      <ion-label>Nom </ion-label>
-      <ion-input formControlName="name" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>prix </ion-label>
-      <ion-input formControlName="price"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>catégorie </ion-label>
-      <ion-input formControlName="categorie"></ion-input>
-    </ion-item>
-    <ion-button type="submit" expand="full"> {{nameArticle !== "" ? "Mettre à jour":"Ajouter votre article" }}
-    </ion-button>
-    <ion-button slot="fixed" vertical="bottom" horizontal="end" (click)="close()"> close modal</ion-button>
+    <div>
+      <label>Nom de l'article </label>
+      <input formControlName="name" required placeholder="Banane">
+    </div>
+    <div>
+      <label>Prix</label>
+      <input formControlName="price" placeholder="0">
+    </div>
+    <div>
+      <label>Catégorie </label>
+      <input formControlName="categorie" placeholder="Fruit">
+    </div>
+    <button class="addArticle" type="submit" expand="full"> {{nameArticle !== "" ? "Mettre à jour":"Ajouter votre article" }}</button>
+    <button (click)="close()"><div  class="noAdd" > Ne pas ajouter d'article</div></button>
   </form>
-</ion-content>
+</content>

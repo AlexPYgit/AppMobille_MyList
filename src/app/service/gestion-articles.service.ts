@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../model/article';
+import { Article } from '../models/article';
 import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { resourceUsage } from 'process';
@@ -100,8 +100,8 @@ export class GestionArticlesService {
    * @param article 
    */
   deleteArticle(id: number) {
-    this.MesProduits.splice(this.manageId(id), 1);
-    console.log(this.manageId(id))
+    this.MesProduits =  this.MesProduits.filter(article => article.id !== id);
+    console.log(this.MesProduits)
     this.saveArticle(this.article);
   }
 
@@ -130,37 +130,37 @@ export class GestionArticlesService {
   /**
    * récupère les paramètre du formulaire
    */
-  async getParamsForms() {
-    const { value } = await Preferences.get({ key: 'params' });
-    if (value) {
-      const parametreInMemory = JSON.parse(value);
-      this.article.name = parametreInMemory.name;
-      this.article.price = parametreInMemory.price;
-      this.article.categorie = parametreInMemory.categorie;
-    }
-  }
+  // async getParamsForms() {
+  //   const { value } = await Preferences.get({ key: 'params' });
+  //   if (value) {
+  //     const parametreInMemory = JSON.parse(value);
+  //     this.article.name = parametreInMemory.name;
+  //     this.article.price = parametreInMemory.price;
+  //     this.article.categorie = parametreInMemory.categorie;
+  //   }
+  // }
 
   /**
    * execute la méthode setParams pour mettre stocker les infos
    */
-  soumettreFormulaire() {
-    this.setParamsForm();
-    console.log('Informations utilisateur mises en mémoire :', this.article);
-  }
+  // soumettreFormulaire() {
+  //   this.setParamsForm();
+  //   console.log('Informations utilisateur mises en mémoire :', this.article);
+  // }
 
   /**
    * fonction setPamas permet persister les datas de l'objet définie en value 
    */
-  setParamsForm = async () => {
-    await Preferences.set({
-      key: 'params',
-      value: JSON.stringify({
-        name: this.paramsForm.value.name,
-        price: this.paramsForm.value.price,
-        categorie: this.paramsForm.value.categorie
-      })
-    })
-  }
+  // setParamsForm = async () => {
+  //   await Preferences.set({
+  //     key: 'params',
+  //     value: JSON.stringify({
+  //       name: this.paramsForm.value.name,
+  //       price: this.paramsForm.value.price,
+  //       categorie: this.paramsForm.value.categorie
+  //     })
+  //   })
+  // }
 
   /**
    * manage les id des article
