@@ -63,7 +63,7 @@ export class ArticleComponent implements OnInit {
    * upade an existing article in memorie
    */
   // updateArticle() {
-  //   console.log("je rentre dans la met pour update")
+  //   console.log("je rentre dans la methode pour update")
   //   this.gestionArticle.updateArticle(this.makeArticleFromFormParams());
   //   this.close()
   // }

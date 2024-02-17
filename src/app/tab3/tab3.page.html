@@ -5,10 +5,11 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<div class="info">
 
-<ion-list>
-  <ion-item>
-    <ion-select interface="interface" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
+  <ion-list>
+    <ion-item>
+      <ion-select interface="interface" toggleIcon="add" expandedIcon="remove" aria-label="catégorie"
       placeholder="Selectioner une catégorie" [(ngModel)]="selectedCategory" (ionChange)="handleCategory()">
       <ion-select-option value="All"> All </ion-select-option>
       <ion-select-option *ngFor="let categorie of Categories" [value]="categorie"> {{categorie}}
@@ -16,6 +17,8 @@
     </ion-select>
   </ion-item>
 </ion-list>
+<div id="info-top-screen">Total = {{montant}}€ </div>
+</div>
 <ion-content color="light">
   <ion-list [inset]="true">
     <ion-item *ngFor="let Produit of filteredArticles">

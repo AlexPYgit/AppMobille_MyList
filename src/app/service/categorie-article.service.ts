@@ -11,18 +11,17 @@ export class CategorieArticleService {
 
 
   /**
-   * Fait la liste des catégories
-   */
+ * Retrieves unique categories from a list of products.
+ * @param {Array<Article>} products - The array of products.
+ * @returns {Array<string>} An array containing unique categories.
+ */
   getCategory(MesProduits: Array<Article>): Array<string> {
     for (const produit of MesProduits) {
-      console.log(produit)
       if (!this.listCategorie.includes(produit.categorie)) {
         this.listCategorie.push(produit.categorie);
       };
     }
-
     return this.listCategorie;
-
   }
 
 }

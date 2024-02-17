@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 import { Article } from '../models/article';
 import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { resourceUsage } from 'process';
-import { IonList } from '@ionic/angular';
-import { forceUpdate } from 'ionicons/dist/types/stencil-public-runtime';
-import { BehaviorSubject } from 'rxjs';
 import { CategorieArticleService } from './categorie-article.service';
 
 
@@ -23,11 +19,11 @@ export class GestionArticlesService {
 
 
   ListArticleparDefaut: any = [
-    { produitName: "riz", prix: 2.5, type: "alimentaire", id: 0, inList: true, quantity: 1 },
-    { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 1 },
-    { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 1 },
-    { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 1 },
-    { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
+    { produitName: "riz", prix: 3, type: "alimentaire", id: 0, inList: true, quantity: 1 },
+    // { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 1 },
+    // { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 1 },
+    // { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 1 },
+    // { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
   ]
 
   constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
@@ -36,12 +32,12 @@ export class GestionArticlesService {
     this.ListArticleparDefaut.forEach((element: { produitName: String; prix: number; type: string; id: number, inList: boolean, quantity: number }) => {
       this.article = new Article()
       this.article.name = element.produitName,
-        this.article.price = element.prix,
-        this.article.categorie = element.type,
-        this.article.id = element.id,
-        this.article.isInListToBuy = element.inList,
-        this.article.quantity = element.quantity,
-        this.MesProduits.push(this.article)
+      this.article.price = element.prix,
+      this.article.categorie = element.type,
+      this.article.id = element.id,
+      this.article.isInListToBuy = element.inList,
+      this.article.quantity = element.quantity,
+      this.MesProduits.push(this.article)
       this.saveArticle(this.article);
     })
 
@@ -52,7 +48,6 @@ export class GestionArticlesService {
    * champ du formulaire d'un article
    */
   paramsForm = this.formBuilder.group({
-
     name: new FormControl(this.article.name),
     price: new FormControl(this.article.name),
     categorie: new FormControl(this.article.name),
@@ -109,10 +104,8 @@ export class GestionArticlesService {
    * update la variable inList si l'article est dans la liste ou non
    */
   inList(article: Article) {
-    //this.manageId(article.id);
     let articleUpadte = new Article();
     articleUpadte = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
-    console.log(articleUpadte);
 
     this.saveArticle(articleUpadte);
   }
@@ -125,53 +118,6 @@ export class GestionArticlesService {
       key: 'artilces',
       value: JSON.stringify(this.MesProduits)
     })
-  }
-
-  /**
-   * récupère les paramètre du formulaire
-   */
-  // async getParamsForms() {
-  //   const { value } = await Preferences.get({ key: 'params' });
-  //   if (value) {
-  //     const parametreInMemory = JSON.parse(value);
-  //     this.article.name = parametreInMemory.name;
-  //     this.article.price = parametreInMemory.price;
-  //     this.article.categorie = parametreInMemory.categorie;
-  //   }
-  // }
-
-  /**
-   * execute la méthode setParams pour mettre stocker les infos
-   */
-  // soumettreFormulaire() {
-  //   this.setParamsForm();
-  //   console.log('Informations utilisateur mises en mémoire :', this.article);
-  // }
-
-  /**
-   * fonction setPamas permet persister les datas de l'objet définie en value 
-   */
-  // setParamsForm = async () => {
-  //   await Preferences.set({
-  //     key: 'params',
-  //     value: JSON.stringify({
-  //       name: this.paramsForm.value.name,
-  //       price: this.paramsForm.value.price,
-  //       categorie: this.paramsForm.value.categorie
-  //     })
-  //   })
-  // }
-
-  /**
-   * manage les id des article
-   */
-  manageId(id: number): number {
-    for (let index = 0; index < this.MesProduits.length; index++) {
-      if (this.MesProduits[index].id == id) {
-        this.idArticle = id;
-      }
-    }
-    return this.idArticle;
   }
 
 }

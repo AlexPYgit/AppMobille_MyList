@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
@@ -18,18 +18,12 @@ export class Tab3Page {
   article?: Article;
   Categories: Array<string> = [];
   MesProduits: Array<Article> = [];
-  addList: boolean = true;
   selectedCategory: string = "";
   filteredArticles: Article[] = [];
-  nomberArticleByItem : number = 0;
+  montant = 0
 
 
   constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
-
-    /**
-      * récupère la liste d'article
-      */
-    // this.MesProduits = this.gestionArticle.MesProduits;
 
     /**
      * appelle la liste catégories du service gestion aticle
@@ -39,7 +33,17 @@ export class Tab3Page {
 
     this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
 
+
   }
+
+ngOnInit(){
+ 
+  console.log("le montant :", this.montantOfTheshopping());
+}
+
+ionViewWillEnter(): void {
+  this.montantOfTheshopping()
+}
 
   /**
    *filtre des categories 
@@ -54,11 +58,28 @@ export class Tab3Page {
 
   ///END CATEGORIES
 
+    /**
+   * récupère les article mit dans la list de course
+   */
+   montantOfTheshopping() : number {
+        this.montant = 0;
+
+      this.gestionArticle.getArticles().forEach(element => {
+        if (element.isInListToBuy && element.price) {
+          console.log(element)
+          this.montant =+ this.montant + element.price;
+        }
+      })
+
+      return this.montant;
+    }
+
   /**
    * variable  de présnce dans la liste
    */
   addingList(article: Article) {
     this.gestionArticle.inList(article)
+    this.montantOfTheshopping();
   }
 
   /**
@@ -71,7 +92,6 @@ export class Tab3Page {
 
   }
 
-
   /**
    * Manage to toast 
    */
@@ -82,7 +102,6 @@ export class Tab3Page {
       position: position,
       color : "success",
     });
-
     await toast.present();
   }
 
@@ -126,8 +145,8 @@ export class Tab3Page {
     }
   }
 
+  // Mettre à jour la quantité de l'article lorsqu'il y a un changement dans l'entrée
   updateQuantity(event: any, article: any) {
-    // Mettre à jour la quantité de l'article lorsqu'il y a un changement dans l'entrée
     const value = event.target.value;
     article.number = value;
   }

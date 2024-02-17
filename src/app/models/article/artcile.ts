@@ -1,4 +1,3 @@
-import { PrivateKeyInput } from "crypto";
 import { PriceHistory } from "../PriceHistory/price-history";
 
 export class Artcile {
