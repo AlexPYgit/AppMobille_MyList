@@ -1,0 +1,150 @@
+[33mcommit 95db31293e3fcf196dc8eae612f180a2fc438335[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: @AlexP_FMS <alexis.payet@fms-ea.com>
+Date:   Sat Feb 17 13:55:37 2024 +0100
+
+    fix concat of number
+
+[33mcommit 4492ce70fe314f36f964f8c29425570a14471adf[m
+Author: @AlexP_FMS <alexis.payet@fms-ea.com>
+Date:   Sat Feb 17 13:08:24 2024 +0100
+
+    update config for the name
+
+[33mcommit 23eb999b011310cae72ebf05b9e5ea9a806a0a67[m
+Author: @AlexP_FMS <alexis.payet@fms-ea.com>
+Date:   Sat Feb 17 12:50:26 2024 +0100
+
+    add total montant in tab 3 (mes articles)
+
+[33mcommit 17666f02aeed212abc656dea3812bc25755b77fc[m
+Author: @AlexP_FMS <alexis.payet@fms-ea.com>
+Date:   Sat Feb 17 10:59:37 2024 +0100
+
+    add mongoDB and update code and feature
+
+[33mcommit 1d22dbe8cbc24532a4ec3e946998605abf54bd63[m
+Author: Alexis PAYET <PayetA@airbus.ad.fms-ea.com>
+Date:   Tue Dec 5 17:37:22 2023 +0100
+
+    delete qte param of artilces
+
+[33mcommit ccf88348cec5e0cf4e2b04be67c82c715c527171[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Thu Nov 23 22:56:38 2023 +0100
+
+    resize component for fix bug in tab 3.
+
+[33mcommit e2a3e386adad305a146b492b2f3e4c8286fa9caf[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Tue Nov 21 23:24:49 2023 +0100
+
+    select produit ok.
+
+[33mcommit 405104b3d8373bb5c529b2b0f4c029a20782897e[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Nov 11 19:07:38 2023 +0100
+
+    add catégory filter, and fixt bug of concaténation of numbres in tab 1
+
+[33mcommit 0f5ee7f6cd5a028d43b33638c25011c3668674b2[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Nov 11 13:51:56 2023 +0100
+
+    add category list (select) with servirce categoriy Article
+
+[33mcommit 39c96ac5ff82c1969c685581e70037f71fa1aa64[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Wed Nov 1 19:32:37 2023 +0100
+
+    update code ^^
+
+[33mcommit a9a7f702dc5eeb3347f268781a9f6fc6df1fa1e0[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Wed Nov 1 18:23:53 2023 +0100
+
+    add article in liste to buy ok, calcul nombre d'article in list ok, calcul total cost for articles ok
+
+[33mcommit 666155e5bc0bc9dc3cfe4353d489d7a2ddc84b76[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sun Oct 29 19:40:58 2023 +0100
+
+    work on list of article to buy at show in tab 1 not finish
+
+[33mcommit 3201c6e93d6386aa569eaebc1ea18407cd01749c[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Fri Oct 27 17:02:06 2023 +0200
+
+    valid if the article is in list of course, add in liste page the articles with the variable is true for going to the list of course
+
+[33mcommit cdcd7f40523a889e5b311c829bb794b4276e54b4[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Fri Oct 27 10:54:17 2023 +0200
+
+    remove the delete article option, add and delete article ok, add an ID for the article
+    adding a service to complet
+
+[33mcommit aeaedfb063638735f946655ce9ec8645b46f3477[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Tue Oct 17 23:51:12 2023 +0200
+
+    ajout auto de la liste dans la mémoire à l'init du service, service fonctionnel,
+
+[33mcommit 66b47cb73d54096df75e28c0751e3222dc045e75[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Oct 14 23:44:14 2023 +0200
+
+    add servie, add capacitor/prefenrece for persistence data
+
+[33mcommit ff26d0d8b7d76fec098e14642c09278490df7778[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Oct 14 17:02:25 2023 +0200
+
+    update readme
+
+[33mcommit 218c9f52ce4df920a86fa3d2693d7fc85d6b538d[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Oct 14 17:00:31 2023 +0200
+
+    add toast for validation add to list, add modal (creating ) for create and update article, add button and design for the elements
+
+[33mcommit 9ff460de60d416a857c7122b3169c9003d067c91[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Oct 14 12:56:50 2023 +0200
+
+    start to create front of the app
+
+[33mcommit 32da93753e9076fe2dd3b99b816ebc70e4348e80[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Oct 14 10:15:11 2023 +0200
+
+    part 2 of new project
+
+[33mcommit 69576637e7dd22f6ae4b191eaaa294bfd98884b5[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Sat Oct 14 10:14:31 2023 +0200
+
+    add new project
+
+[33mcommit 89397c91e93809d78c669229755ddb73006a23e4[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Fri Oct 13 23:25:21 2023 +0200
+
+    init project
+
+[33mcommit d0fde7d9fc7b6c2494319233cb845935d62ad29e[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Fri Oct 13 23:10:23 2023 +0200
+
+    add notice and two area
+
+[33mcommit b532a2b08229bc2adbea9c436eb09a0644d885c8[m
+Author: Alexis PAYET <alexis.payet0@gmail.com>
+Date:   Fri Oct 13 22:51:30 2023 +0200
+
+    init project
+
+[33mcommit 98c948672942371d86d3c2d4a812085fec76ed1a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: AlexPYgit <70750015+AlexPYgit@users.noreply.github.com>
+Date:   Wed Oct 4 18:43:23 2023 +0200
+
+    Initial commit
