@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Article } from '../models/article';
-import { Preferences } from '@capacitor/preferences';
+// import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CategorieArticleService } from './categorie-article.service';
+import { Storage } from '@ionic/storage-angular';
+import { Observable } from 'rxjs';
+
 
 
 @Injectable({
@@ -11,7 +14,7 @@ import { CategorieArticleService } from './categorie-article.service';
 export class GestionArticlesService {
 
   article: Article = new Article();
-  MesProduits: Array<Article> = [];
+  MesProduits: Article[] = [];
   Categories: Array<string> = [];
   ListDeCourse: Array<Article> = [];
   MesArticlePourLesCourse: Array<Article> = [];
@@ -26,7 +29,7 @@ export class GestionArticlesService {
     // { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
   ]
 
-  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
+  constructor(private storage: Storage,private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
 
     //Enregistre une liste de produit par defauts en mémoire
     this.ListArticleparDefaut.forEach((element: { produitName: String; prix: number; type: string; id: number, inList: boolean, quantity: number }) => {
@@ -57,8 +60,9 @@ export class GestionArticlesService {
    * use by Tab3 on ngInit
    * @returns a list Artilce
    */
-  getArticles(): Array<Article> {
-    return this.MesProduits
+  async getArticles(): Promise<Article[]> {
+    const articles = await this.storage.get("articles");
+    return articles || [];
   }
 
   addArticle(article: Article) {
@@ -114,10 +118,8 @@ export class GestionArticlesService {
  * persistence on mobille with préférence capactior
  */
   async saveArticle(article: Article) {
-    await Preferences.set({
-      key: 'artilces',
-      value: JSON.stringify(this.MesProduits)
-    })
+    localStorage.setItem('articles', JSON.stringify(this.MesProduits))
+    // await this.storage.set("artilces", JSON.stringify(this.MesProduits))
   }
 
 }

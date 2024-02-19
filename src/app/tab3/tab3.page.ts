@@ -31,8 +31,9 @@ export class Tab3Page {
 
     this.Categories = this.gestionArticle.Categories;
 
-    this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
+    // this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
 
+    console.log("récupere le storage",this.gestionArticle.MesProduits);
 
   }
 
@@ -43,6 +44,12 @@ ngOnInit(){
 
 ionViewWillEnter(): void {
   this.montantOfTheshopping()
+}
+
+ngAfterViewInit(){
+  console.log("récupere le storage",this.gestionArticle.MesProduits);
+  this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
+
 }
 
   /**
@@ -61,17 +68,21 @@ ionViewWillEnter(): void {
     /**
    * récupère les article mit dans la list de course
    */
-   montantOfTheshopping() : number {
-        this.montant = 0;
-
-      this.gestionArticle.getArticles().forEach(element => {
-        if (element.isInListToBuy && element.price) {
-          console.log(element)
-          this.montant = Number( this.montant) + Number(element.price)
-        }
-      })
-
-      return this.montant;
+    montantOfTheshopping(): number {
+      this.montant = 0;
+      const articleStorage = localStorage.getItem("articles");
+      if (articleStorage) {
+        const articles: Article[] = JSON.parse(articleStorage);
+        return this.montant = articles.reduce((acc, article) => {
+          if (article.price !== undefined && article.isInListToBuy === true) {
+            return acc + article.price;
+          } else {
+            return acc;
+          }
+        }, 0);
+      }
+      // Retourner une valeur par défaut si aucun article n'est trouvé
+      return 0;
     }
 
   /**
@@ -124,6 +135,7 @@ ionViewWillEnter(): void {
 
   confirm() {
     this.modalController.dismiss('confirm');
+    console.log(localStorage)
   }
 
   onWillDismiss(event: Event) {

@@ -24,12 +24,11 @@ export class Tab1Page {
    * récupère les article mit dans la list de course
    */
   getArticleInList() {
-    this.ListArticle = [];
-    this.gestionArticle.getArticles().forEach(element => {
-      if (element.isInListToBuy) {
-        this.ListArticle.push(element)
-      }
-    })
+    const articlesString = localStorage.getItem("articles");
+    if(articlesString){
+      const articles: Article[] = JSON.parse(articlesString);
+      this.ListArticle = articles.filter(article => article.isInListToBuy === true);
+    }
   }
 
   ionViewWillEnter(): void {
