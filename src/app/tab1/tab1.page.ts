@@ -2,6 +2,7 @@ import { Component, Input, } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 import { Article } from '../models/article';
+import { Preferences } from '@capacitor/preferences';
 
 
 
@@ -18,6 +19,16 @@ export class Tab1Page {
 
   constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
     this.ionViewWillEnter()
+
+   
+  }
+
+  async ngOnInit(){
+    const ret = await Preferences.get({key:'articles'})
+    if(ret.value){
+      this.ListArticle = JSON.parse(ret.value)
+    }
+    console.log("get pref :", this.ListArticle)
   }
 
   /**

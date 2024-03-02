@@ -8,6 +8,7 @@ import { GestionArticlesService } from 'src/app/service/articles-services/gestio
 
 
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -38,7 +39,6 @@ export class Tab3Page {
   }
 
 ngOnInit(){
- 
   console.log("le montant :", this.montantOfTheshopping());
 }
 
