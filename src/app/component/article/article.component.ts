@@ -3,8 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { NavParams } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Article } from 'src/app/models/article';
-import { GestionArticlesService } from 'src/app/service/gestion-articles.service';
-import { Preferences } from '@capacitor/preferences';
+import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 
 @Component({
   selector: 'app-article',
@@ -51,11 +50,14 @@ export class ArticleComponent implements OnInit {
   soumettreFormulaire() {
     console.log(this.paramsForm.dirty)
     console.log("ajout d'article")
-    this.addArticle()
+    if(this.paramsForm.dirty){
+      this.addArticle()
+    }
+    this.close();
   }
 
   addArticle() {
-    this.gestionArticle.addArticle(this.makeArticleFromFormParams());
+    this.gestionArticle.addArticle(this.makeArticleFromParams());
     this.close()
   }
 
@@ -72,7 +74,7 @@ export class ArticleComponent implements OnInit {
    * get the data in form and make a new article
    * @returns an Aricle
    */
-  makeArticleFromFormParams() {
+  makeArticleFromParams() {
     if (this.paramsForm.value.name && this.paramsForm.value.price && this.paramsForm.value.categorie) {
       this.article.name = this.paramsForm.value.name;
       this.article.price = this.paramsForm.value.price;

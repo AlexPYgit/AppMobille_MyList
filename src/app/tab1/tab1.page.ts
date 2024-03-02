@@ -1,6 +1,6 @@
 import { Component, Input, } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { GestionArticlesService } from '../service/gestion-articles.service';
+import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 import { Article } from '../models/article';
 
 

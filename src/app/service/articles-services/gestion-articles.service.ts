@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../models/article';
+import { Article } from '../../models/article';
 // import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { CategorieArticleService } from '../service/categorie-services/categorie-article.service';
+import { CategorieArticleService } from '../categorie-services/categorie-article.service';
 import { Storage } from '@ionic/storage-angular';
 import { Observable } from 'rxjs';
 

@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../models/article';
-import { GestionArticlesService } from '../service/gestion-articles.service';
+import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 
 
 
