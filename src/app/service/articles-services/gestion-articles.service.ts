@@ -61,6 +61,16 @@ export class GestionArticlesService {
     }
   }
 
+  //create an liste articles to buy 
+  async getArticleToBuy() : Promise<Article[]>{
+    let artcileToBuy : Article[] = [];
+    const { value } = await Preferences.get({ key: 'articles' });
+    if(value){
+      artcileToBuy = JSON.parse(value);
+    }
+   return artcileToBuy.filter(article => article.isInListToBuy == true)
+  }
+
   async addArticle(article: Article) {
     article.id = this.IdArticleBigest();
     this.MesProduits.push(article);
@@ -70,6 +80,7 @@ export class GestionArticlesService {
     })
   }
 
+  // Utilisation de reduce pour trouver l'ID le plus grand
   IdArticleBigest(): number{
     const largestId = this.MesProduits.reduce((maxId, article) => {
       return article.id > maxId ? article.id : maxId;
@@ -108,11 +119,11 @@ export class GestionArticlesService {
   /**
    * update la variable inList si l'article est dans la liste ou non
    */
-  inList(article: Article) {
+  inListToBuy(article: Article) {
     let articleUpadte = new Article();
     articleUpadte = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
-
-    this.saveArticle(articleUpadte);
+    console.log("vakeur inlist :", articleUpadte)
+    this.updateArticle(articleUpadte);
   }
 
  /**

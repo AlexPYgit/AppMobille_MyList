@@ -26,13 +26,13 @@
         <ion-row>
           <ion-col size="2">
             <div *ngIf="!Produit.isInListToBuy">
-            <ion-button (click)="addingList(Produit)" id="open-toast" shape="round" color="medium" fill="outline"
+            <ion-button (click)="addingListOrRemove(Produit)" id="open-toast" shape="round" color="medium" fill="outline"
               (click)="presentToast('top', 'ajouté à')">
               <ion-icon name="medkit-outline"></ion-icon>
             </ion-button>
           </div>
             <div *ngIf="Produit.isInListToBuy">
-              <ion-button shape="round" color="success" fill="outline">
+              <ion-button (click)="addingListOrRemove(Produit)"  shape="round" color="success" fill="outline">
                 <ion-icon color="success" name="checkmark-outline"></ion-icon>
               </ion-button>
             </div>

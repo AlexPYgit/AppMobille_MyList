@@ -88,8 +88,8 @@ ngAfterViewInit(){
   /**
    * variable  de présnce dans la liste
    */
-  addingList(article: Article) {
-    this.gestionArticle.inList(article)
+  addingListOrRemove(article: Article) {
+    this.gestionArticle.inListToBuy(article)
     this.montantOfTheshopping();
   }
 

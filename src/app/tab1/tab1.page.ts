@@ -1,8 +1,7 @@
-import { Component, Input, } from '@angular/core';
+import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 import { Article } from '../models/article';
-import { Preferences } from '@capacitor/preferences';
 
 
 
@@ -19,33 +18,13 @@ export class Tab1Page {
 
   constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
     this.ionViewWillEnter()
-
-   
   }
 
-  async ngOnInit(){
-    const ret = await Preferences.get({key:'articles'})
-    if(ret.value){
-      this.ListArticle = JSON.parse(ret.value)
-    }
-    console.log("get pref :", this.ListArticle)
-  }
-
-  /**
-   * récupère les article mit dans la list de course
-   */
-  getArticleInList() {
-    const articlesString = localStorage.getItem("articles");
-    if(articlesString){
-      const articles: Article[] = JSON.parse(articlesString);
-      this.ListArticle = articles.filter(article => article.isInListToBuy === true);
-    }
-  }
-
-  ionViewWillEnter(): void {
+   async ionViewWillEnter(): Promise<void> {
     this.Montant = 0;
-    this.getArticleInList()
-    this.montantTotal()
+    this.montantTotal();
+    this.ListArticle =  await this.gestionArticle.getArticleToBuy();
+  
   }
 
   montantTotal(): number {
@@ -59,11 +38,10 @@ export class Tab1Page {
   }
 
   //retire l'article de la liste si la checkbox est coché
-  onIndeterminateChange(event: any, artcile: Article) {
-    this.gestionArticle.inList(artcile)
-    console.log('La variable indeterminate a changé :', event);
+   async onIndeterminateChange(event: any, artcile: Article) {
+    this.gestionArticle.inListToBuy(artcile)
     this.indeterminate = !event;
-    this.ionViewWillEnter()
+    console.log('La variable indeterminate a changé :', this.indeterminate);
   }
 
 }
