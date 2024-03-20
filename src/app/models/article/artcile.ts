@@ -1,6 +1,6 @@
 import { PriceHistory } from "../PriceHistory/price-history";
 
-export class Artcile {
+export class Article {
     name: String = "";
     price: PriceHistory;
     categorie: string = "";

@@ -5,9 +5,7 @@ import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../models/article';
 import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
-
-
-
+import { CategorieArticleService } from '../service/categorie-services/categorie-article.service';
 
 @Component({
   selector: 'app-tab3',
@@ -20,11 +18,11 @@ export class Tab3Page {
   Categories: Array<string> = [];
   MesProduits: Array<Article> = [];
   selectedCategory: string = "";
-  filteredArticles: Article[] = [];
+  filteredArticles!: Article[];
   montant = 0
 
 
-  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
+  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
 
     /**
      * appelle la liste catégories du service gestion aticle
@@ -32,24 +30,22 @@ export class Tab3Page {
 
     this.Categories = this.gestionArticle.Categories;
 
-    // this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
-
     console.log("récupere le storage",this.gestionArticle.MesProduits);
 
   }
-
-ngOnInit(){
-  console.log("le montant :", this.montantOfTheshopping());
-}
 
 ionViewWillEnter(): void {
   this.montantOfTheshopping()
 }
 
 ngAfterViewInit(){
-  console.log("récupere le storage",this.gestionArticle.MesProduits);
-  this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
+  this.gestionArticle.getArticles().then((ele) => {
+    this.filteredArticles = ele;
+    this.filteredArticles.forEach((categories) => { this.Categories.push(categories.categorie) }); 
+    console.log("liste de mes article stocké",this.filteredArticles)
 
+  });
+  
 }
 
   /**
@@ -57,9 +53,9 @@ ngAfterViewInit(){
    */
   handleCategory() {
     if (this.selectedCategory != "All") {
-      this.filteredArticles = this.MesProduits.filter(produit => produit.categorie === this.selectedCategory);
+      this.selectedCategory 
     } else {
-      this.filteredArticles = [...this.MesProduits];
+     this.Categories;
     }
   }
 

@@ -31,15 +31,17 @@ export class GestionArticlesService {
   constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
     this.Categories = categorieService.getCategory(this.MesProduits);
 
+    }
+
+  ngOnInit() {
+  
     this.getArticles().then((array) => 
     array.forEach((articleStorage: Article) => 
     this.MesProduits.push(articleStorage)
     )
     )
     console.log("storge:", this.MesProduits)
-    }
-
-
+}
 
   /**
    * champ du formulaire d'un article
@@ -82,10 +84,13 @@ export class GestionArticlesService {
 
   // Utilisation de reduce pour trouver l'ID le plus grand
   IdArticleBigest(): number{
-    const largestId = this.MesProduits.reduce((maxId, article) => {
-      return article.id > maxId ? article.id : maxId;
-  }, this.MesProduits[0].id);
-  return largestId + 1;
+    let maxId = 0;
+        for (const article of this.MesProduits) {
+            if (article.id > maxId) {
+                maxId = article.id;
+            }
+        }
+        return maxId;
   }
 
   /**
@@ -111,7 +116,7 @@ export class GestionArticlesService {
    * @param article 
    */
   deleteArticle(id: number) {
-    this.MesProduits =  this.MesProduits.filter(article => article.id !== id);
+    this.MesProduits =  this.MesProduits.filter(article => article.id == id);
     console.log(this.MesProduits)
     this.saveArticle(this.article);
   }
@@ -122,7 +127,7 @@ export class GestionArticlesService {
   inListToBuy(article: Article) {
     let articleUpadte = new Article();
     articleUpadte = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
-    console.log("vakeur inlist :", articleUpadte)
+    console.log("valeur inlist :", articleUpadte)
     this.updateArticle(articleUpadte);
   }
 

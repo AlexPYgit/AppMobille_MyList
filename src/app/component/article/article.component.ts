@@ -31,17 +31,21 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {
     const articleData = this.navParams.get('data');
-    this.nameArticle = articleData.name;
-    console.log(articleData)
+    this.nameArticle = articleData;
+    console.log("article date",this.navParams.get('data'))
 
     /**
      * get the data of the article from the liste for show in the modal
      */
-    this.paramsForm = this.formBuilder.group({
-      name: [this.article.name = articleData.name],
-      price: [this.article.price = articleData.price],
-      categorie: [this.article.categorie = articleData.categorie]
-    })
+    if (this.nameArticle != undefined) { 
+      this.paramsForm = this.formBuilder.group({
+        name: [this.article.name = articleData.name],
+        price: [this.article.price = articleData.price],
+        categorie: [this.article.categorie = articleData.categorie]
+      })
+    } else {
+      this.nameArticle = "new article";
+    }
   }
 
   /**
