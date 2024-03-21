@@ -124,12 +124,16 @@ export class GestionArticlesService {
    * @param article 
    */
   async deleteArticle(id: number) {
-    this.MesProduits =  this.MesProduits.filter(article => article.id == id);
-    console.log(this.MesProduits)
-    await Preferences.set({
-      key:'articles',
-      value: JSON.stringify(this.MesProduits)
-    })
+    let existingArticles = await this.getArticles();
+    
+      existingArticles =  existingArticles.filter((article: { id: number; }) => article.id !== id);
+      console.log(existingArticles)
+      await Preferences.set({
+        key:'articles',
+        value: JSON.stringify(existingArticles)
+      })
+      // Déclencher le service de rafraîchissement si nécessaire
+      this.refreshService.setRefreshState(true);
   }
 
   /**
