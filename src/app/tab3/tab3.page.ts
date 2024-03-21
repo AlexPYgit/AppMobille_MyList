@@ -6,6 +6,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../models/article';
 import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 import { CategorieArticleService } from '../service/categorie-services/categorie-article.service';
+import { RefreshServiceService } from '../service/refresh/refresh-service.service';
 
 @Component({
   selector: 'app-tab3',
@@ -22,7 +23,7 @@ export class Tab3Page {
   montant = 0
 
 
-  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
+  constructor(private refreshService : RefreshServiceService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
 
     /**
      * appelle la liste catégories du service gestion aticle
@@ -31,6 +32,13 @@ export class Tab3Page {
     this.Categories = this.gestionArticle.Categories;
 
     console.log("récupere le storage",this.gestionArticle.MesProduits);
+
+    this.refreshService.refreshState$.subscribe((state) => {
+      if(state){
+        this.ngAfterViewInit();
+      }
+    })
+
 
   }
 
@@ -45,6 +53,7 @@ ngAfterViewInit(){
     console.log("liste de mes article stocké",this.filteredArticles)
 
   });
+
   
 }
 

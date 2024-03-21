@@ -4,8 +4,10 @@ import { Article } from '../../models/article';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CategorieArticleService } from '../../service/categorie-services/categorie-article.service';
 import { Storage } from '@ionic/storage-angular';
-import { Observable } from 'rxjs';
+import { Observable, max } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
+import { RefreshServiceService } from '../refresh/refresh-service.service';
+import { listenerCount } from 'process';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +25,9 @@ export class GestionArticlesService {
   ListArticleparDefaut: any = [
     { produitName: "riz", prix: 3, type: "alimentaire", id: 0, inList: true, quantity: 1 },
     { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 1 },
-    // { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 1 },
-    // { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 1 },
-    // { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
   ]
 
-  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
+  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService , private refreshService : RefreshServiceService) {
     this.Categories = categorieService.getCategory(this.MesProduits);
 
     }
@@ -74,23 +73,32 @@ export class GestionArticlesService {
   }
 
   async addArticle(article: Article) {
-    article.id = this.IdArticleBigest();
-    this.MesProduits.push(article);
-   await Preferences.set({
-    key:'articles',
-   value: JSON.stringify(this.MesProduits)
-    })
+    const existingArticles = await this.getArticles();
+    console.log("mes article stocké", existingArticles)
+    article.id = this.IdArticleBigest(existingArticles);
+    article.quantity = 1;
+    if (existingArticles) {
+        this.MesProduits = [...existingArticles, article];
+    } else {
+        this.MesProduits.push( article);
+    }
+    await Preferences.set({
+        key: 'articles',
+        value: JSON.stringify(this.MesProduits)
+    });
+    // Déclencher le service de rafraîchissement si nécessaire
+    this.refreshService.setRefreshState(true);
   }
 
   // Utilisation de reduce pour trouver l'ID le plus grand
-  IdArticleBigest(): number{
-    let maxId = 0;
-        for (const article of this.MesProduits) {
-            if (article.id > maxId) {
-                maxId = article.id;
-            }
-        }
-        return maxId;
+  IdArticleBigest(listArticle : Article[]): number{
+    let IdMax = 0;
+    for(let num of listArticle){
+      if(num.id > IdMax){
+        IdMax = num.id;
+      }
+    }
+        return IdMax + 1 ;
   }
 
   /**
@@ -115,10 +123,13 @@ export class GestionArticlesService {
    * Supprime un artcile de la liste des articles
    * @param article 
    */
-  deleteArticle(id: number) {
+  async deleteArticle(id: number) {
     this.MesProduits =  this.MesProduits.filter(article => article.id == id);
     console.log(this.MesProduits)
-    this.saveArticle(this.article);
+    await Preferences.set({
+      key:'articles',
+      value: JSON.stringify(this.MesProduits)
+    })
   }
 
   /**
@@ -131,15 +142,6 @@ export class GestionArticlesService {
     this.updateArticle(articleUpadte);
   }
 
- /**
- * persistence on mobille with préférence capactior
- */
- async saveArticle(article: Article) {
-  await Preferences.set({
-    key:'articles',
-    value: JSON.stringify(this.MesProduits)
-  })
-}
 
 }
 
