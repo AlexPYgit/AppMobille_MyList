@@ -7,6 +7,7 @@ import { Article } from '../models/article';
 import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 import { CategorieArticleService } from '../service/categorie-services/categorie-article.service';
 import { RefreshServiceService } from '../service/refresh/refresh-service.service';
+import { Price } from '../service/Price-obsrevalbe/price';
 
 @Component({
   selector: 'app-tab3',
@@ -23,7 +24,7 @@ export class Tab3Page {
   montant = 0
 
 
-  constructor(private refreshService : RefreshServiceService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
+  constructor( private priceObservable : Price ,private refreshService : RefreshServiceService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
 
     /**
      * appelle la liste catégories du service gestion aticle
@@ -39,11 +40,21 @@ export class Tab3Page {
       }
     })
 
+    // this.priceObservable.amount$.subscribe(price => {
+    //   this.montant = price;
+    // })
 
   }
 
+  ngOnInit(){
+ //refresh basket price
+ this.priceObservable.amount$.subscribe(price => {
+  this.montant = price;
+})
+  }
+
 ionViewWillEnter(): void {
-  this.montantOfTheshopping()
+ 
 }
 
 ngAfterViewInit(){
@@ -51,8 +62,9 @@ ngAfterViewInit(){
     this.filteredArticles = ele;
     this.filteredArticles.forEach((categories) => { this.Categories.push(categories.categorie) }); 
     console.log("liste de mes article stocké",this.filteredArticles)
-
   });
+
+ 
 
   
 }
@@ -70,32 +82,12 @@ ngAfterViewInit(){
 
   ///END CATEGORIES
 
-    /**
-   * récupère les article mit dans la list de course
-   */
-    montantOfTheshopping(): number {
-      this.montant = 0;
-      const articleStorage = localStorage.getItem("articles");
-      if (articleStorage) {
-        const articles: Article[] = JSON.parse(articleStorage);
-        return this.montant = articles.reduce((acc, article) => {
-          if (article.price !== undefined && article.isInListToBuy === true) {
-            return acc + article.price;
-          } else {
-            return acc;
-          }
-        }, 0);
-      }
-      // Retourner une valeur par défaut si aucun article n'est trouvé
-      return 0;
-    }
 
   /**
    * variable  de présnce dans la liste
    */
   addingListOrRemove(article: Article) {
-    this.gestionArticle.inListToBuy(article)
-    this.montantOfTheshopping();
+    this.gestionArticle.addListToBuy(article)
   }
 
   /**
@@ -149,6 +141,8 @@ ngAfterViewInit(){
       `Hello, ${ev.detail.data}!`;
     }
   }
+
+  
 
   // Method to increment the value of number aritcles by item
   incrementQuantity(article: Article) {

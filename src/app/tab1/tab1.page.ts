@@ -39,7 +39,7 @@ export class Tab1Page {
 
   //retire l'article de la liste si la checkbox est coché
    async onIndeterminateChange(event: any, artcile: Article) {
-    this.gestionArticle.inListToBuy(artcile)
+    this.gestionArticle.addListToBuy(artcile)
     this.indeterminate = !event;
     console.log('La variable indeterminate a changé :', this.indeterminate);
   }

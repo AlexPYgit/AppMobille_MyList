@@ -8,6 +8,7 @@ import { Observable, max } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
 import { RefreshServiceService } from '../refresh/refresh-service.service';
 import { listenerCount } from 'process';
+import { Price } from '../Price-obsrevalbe/price';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class GestionArticlesService {
   ListDeCourse: Array<Article> = [];
   MesArticlePourLesCourse: Array<Article> = [];
   idArticle: number = 0;
+  montantBasket :number = 0;
 
 
   ListArticleparDefaut: any = [
@@ -27,7 +29,7 @@ export class GestionArticlesService {
     { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 1 },
   ]
 
-  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService , private refreshService : RefreshServiceService) {
+  constructor( private priceObersable : Price, private formBuilder: FormBuilder, private categorieService: CategorieArticleService , private refreshService : RefreshServiceService) {
     this.Categories = categorieService.getCategory(this.MesProduits);
 
     }
@@ -139,13 +141,21 @@ export class GestionArticlesService {
   /**
    * update la variable inList si l'article est dans la liste ou non
    */
-  inListToBuy(article: Article) {
-    let articleUpadte = new Article();
-    articleUpadte = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
-    console.log("valeur inlist :", articleUpadte)
-    this.updateArticle(articleUpadte);
-  }
+  addListToBuy(article: Article) {
+    let articleAddToBuy = new Article();
+    articleAddToBuy = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
+    console.log("valeur inlist :", articleAddToBuy)
+    this.updateArticle(articleAddToBuy);
 
+    //basket price
+     this.priceObersable.amount$.subscribe(amount => {
+      this.montantBasket = amount;
+    });
+    const newBasketPrice =  this.montantBasket + articleAddToBuy.price;
+    this.priceObersable.updateAmount(newBasketPrice);
+    
+    return articleAddToBuy;
+  }
 
 }
 
