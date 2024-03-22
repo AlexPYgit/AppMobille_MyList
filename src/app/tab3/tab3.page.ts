@@ -40,10 +40,6 @@ export class Tab3Page {
       }
     })
 
-    // this.priceObservable.amount$.subscribe(price => {
-    //   this.montant = price;
-    // })
-
   }
 
   ngOnInit(){
@@ -51,11 +47,8 @@ export class Tab3Page {
  this.priceObservable.amount$.subscribe(price => {
   this.montant = price;
 })
-  }
 
-ionViewWillEnter(): void {
- 
-}
+  }
 
 ngAfterViewInit(){
   this.gestionArticle.getArticles().then((ele) => {
@@ -63,11 +56,10 @@ ngAfterViewInit(){
     this.filteredArticles.forEach((categories) => { this.Categories.push(categories.categorie) }); 
     console.log("liste de mes article stocké",this.filteredArticles)
   });
-
- 
-
   
 }
+
+
 
   /**
    *filtre des categories 
@@ -82,11 +74,10 @@ ngAfterViewInit(){
 
   ///END CATEGORIES
 
-
   /**
    * variable  de présnce dans la liste
    */
-  addingListOrRemove(article: Article) {
+  addingListtoBuyOrDelete(article: Article) {
     this.gestionArticle.addListToBuy(article)
   }
 

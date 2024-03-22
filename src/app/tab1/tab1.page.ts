@@ -17,24 +17,27 @@ export class Tab1Page {
   indeterminate: boolean = false;
 
   constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
-    this.ionViewWillEnter()
+    this.ionViewWillEnter();
+    this.montantTotal();
+
   }
 
    async ionViewWillEnter(): Promise<void> {
     this.Montant = 0;
-    this.montantTotal();
+    // this.montantTotal();
     this.ListArticle =  await this.gestionArticle.getArticleToBuy();
   
   }
 
   montantTotal(): number {
+    let montant = 0 ;
     this.ListArticle.forEach(element => {
       if (element.price) {
         let atriclePrice: Number = element.price;
-        this.Montant = (this.Montant + Number(atriclePrice));
+        montant = (montant + Number(atriclePrice));
       }
     })
-    return this.Montant;
+    return montant;
   }
 
   //retire l'article de la liste si la checkbox est coché
