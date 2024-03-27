@@ -1,0 +1,52 @@
+
+.header-md::after{
+    display: none;
+}
+
+
+.inner-scroll{background-color: white  !important;}
+
+.style-title{
+    font-weight: 600;
+    color: white;
+    padding: 20px;
+    background-color: #3b9a75;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#top-screen {
+    display: flex;
+    justify-content: space-between;
+ 
+}
+
+#info-top-screen {
+    padding: 10px 10px;
+    margin: 10px 15px;
+    border-radius: 10px;
+    // box-shadow: 2px 2px 5px 0px rgb(255, 210, 238);
+    color: #322512;
+    background-color: #fff2d9;
+}
+
+#list {
+    padding: 2%;
+}
+
+#imgHeader {
+    // background-image: url(/../../assets/fuirt\ et\ legume.jpg);
+    background-size: 65%;
+}
+
+.itemCours {
+    // box-shadow: 0;
+    // border-radius: 84.5px;
+    // background: #fff;
+    // position: absolute;
+    // // margin-left: -36px;
+    // // margin-top: -36px;
+    // opacity: 0.2;
+
+    // left: 50%;
+    // top: 50%;
+}

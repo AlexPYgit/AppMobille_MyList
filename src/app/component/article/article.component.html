@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-title class="style-title"> {{nameArticle === "" ? 'Ajout d\'un nouvel Article': 'Mon Article "' + nameArticle + '"' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<content class="style_AddArticle">
+  <form [formGroup]="paramsForm" (ngSubmit)="soumettreFormulaire()">
+    <div>
+      <label>Nom de l'article </label>
+      <input formControlName="name" required placeholder="Banane">
+    </div>
+    <div>
+      <label>Prix</label>
+      <input formControlName="price" placeholder="0">
+    </div>
+    <div>
+      <label>Catégorie </label>
+      <input formControlName="categorie" placeholder="Fruit">
+    </div>
+    <button class="addArticle" type="submit" expand="full"> {{nameArticle !== "" ? "Mettre à jour":"Ajouter votre article" }}</button>
+    <button (click)="close()"><div  class="noAdd" > Ne pas ajouter d'article</div></button>
+  </form>
+</content>

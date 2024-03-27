@@ -1,0 +1,40 @@
+<div id="imgHeader">
+
+  <ion-header [translucent]="true">
+    <ion-title class="style-title">
+      Ma list de course
+    </ion-title>
+    <div id="top-screen">
+      <div id="info-top-screen">NB d'article : {{ListArticle.length}}</div>
+      <div id="info-top-screen">Total = {{Montant}}€ </div>
+    </div>
+  </ion-header>
+</div>
+<ion-content color="light">
+  <ion-list [inset]="true">
+    <div *ngIf="ListArticle.length !== 0 ">
+      <ion-item *ngFor="let articles of ListArticle">
+        <ion-checkbox [(ngModel)]="indeterminate" (ngModelChange)="onIndeterminateChange($event, articles)" slot="start"
+          aria-label="Toggle task completion"> </ion-checkbox>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-text> {{articles.name}} </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text> {{articles.price}}€ </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </div>
+    <div *ngIf="ListArticle.length === 0 ">
+      <ion-row>
+        <ion-col>
+          <ion-text id="list"> Ma Liste est vide ! </ion-text>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </div>
+  </ion-list>
+</ion-content>
