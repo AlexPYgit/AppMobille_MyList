@@ -66,15 +66,6 @@ export class ArticleComponent implements OnInit {
   }
 
   /**
-   * upade an existing article in memorie
-   */
-  // updateArticle() {
-  //   console.log("je rentre dans la methode pour update")
-  //   this.gestionArticle.updateArticle(this.makeArticleFromFormParams());
-  //   this.close()
-  // }
-
-  /**
    * get the data in form and make a new article
    * @returns an Aricle
    */

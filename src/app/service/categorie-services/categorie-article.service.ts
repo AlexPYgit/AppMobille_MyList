@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../../models/article';
+import { Preferences } from '@capacitor/preferences';
+import { Article } from 'src/app/models/article';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategorieArticleService {
 
-  listCategorie: Array<string> = [];
   constructor() { }
-
 
   /**
  * Retrieves unique categories from a list of products.
  * @param {Array<Article>} products - The array of products.
  * @returns {Array<string>} An array containing unique categories.
  */
-  getCategory(MesProduits: Array<Article>): Array<string> {
-    for (const produit of MesProduits) {
-      if (!this.listCategorie.includes(produit.categorie)) {
-        this.listCategorie.push(produit.categorie);
-      };
+  async getCategory() {
+    const { value } = await Preferences.get({ key: 'articles' });
+    if(value){
+      return JSON.parse(value);
     }
-    return this.listCategorie;
   }
 
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { GestionArticlesService } from 'src/app/service/articles-services/gestion-articles.service';
 import { Article } from '../models/article';
+import { RefreshServiceService } from '../service/refresh/refresh-service.service';
 
 
 
@@ -16,17 +17,25 @@ export class Tab1Page {
   Montant: number = 0;
   indeterminate: boolean = false;
 
-  constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
+  constructor( private gestionArticle: GestionArticlesService, private refreshservice : RefreshServiceService) {
     this.ionViewWillEnter();
     this.montantTotal();
 
+    this.refreshservice.refreshState$.subscribe((state)=> {
+      if(state){
+        this.ionViewWillEnter();
+        this.montantTotal();
+
+      }
+    })
+
   }
 
-   async ionViewWillEnter(): Promise<void> {
+
+   async ionViewWillEnter() {
     this.Montant = 0;
-    // this.montantTotal();
     this.ListArticle =  await this.gestionArticle.getArticleToBuy();
-  
+    console.log("mes artciel tab 1", this.ListArticle)
   }
 
   montantTotal(): number {
@@ -42,8 +51,10 @@ export class Tab1Page {
 
   //retire l'article de la liste si la checkbox est coché
    async onIndeterminateChange(event: any, artcile: Article) {
-    this.gestionArticle.addListToBuy(artcile)
-    this.indeterminate = !event;
+    this.gestionArticle.addListOrDeleteToBuy(artcile)
+    this.indeterminate = event;
+    console.log("mes artciel tab 1", this.ListArticle)
+
     console.log('La variable indeterminate a changé :', this.indeterminate);
   }
 

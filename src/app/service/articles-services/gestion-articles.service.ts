@@ -30,7 +30,7 @@ export class GestionArticlesService {
   ]
 
   constructor( private priceObersable : Price, private formBuilder: FormBuilder, private categorieService: CategorieArticleService , private refreshService : RefreshServiceService) {
-    this.Categories = categorieService.getCategory(this.MesProduits);
+    
 
     }
 
@@ -141,7 +141,7 @@ export class GestionArticlesService {
   /**
    * update la variable inList si l'article est dans la liste ou non
    */
-  addListToBuy(article: Article) {
+  addListOrDeleteToBuy(article: Article) {
     let articleAddToBuy = new Article();
     articleAddToBuy = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
     console.log("valeur inlist :", articleAddToBuy)
@@ -152,9 +152,10 @@ export class GestionArticlesService {
       this.montantBasket = amount;
     });
     const newBasketPrice =  this.montantBasket + articleAddToBuy.price;
-    this.priceObersable.updateAmount(newBasketPrice);
-    
-    return articleAddToBuy;
+    this.priceObersable.updateAmount(newBasketPrice);   
+     // Déclencher le service de rafraîchissement si nécessaire
+     this.refreshService.setRefreshState(true);
+    // return articleAddToBuy;
   }
 
 }

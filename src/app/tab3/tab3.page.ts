@@ -24,13 +24,24 @@ export class Tab3Page {
   montant = 0
 
 
-  constructor( private priceObservable : Price ,private refreshService : RefreshServiceService, private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
+  constructor( private priceObservable : Price ,private refreshService : RefreshServiceService, private toastController: ToastController,
+     private modalController: ModalController, private gestionArticle: GestionArticlesService, private catégorieService : CategorieArticleService) {
 
     /**
      * appelle la liste catégories du service gestion aticle
      */
-
-    this.Categories = this.gestionArticle.Categories;
+    this.Categories = [];
+    this.catégorieService.getCategory().then(articleCategories => {
+      let listCategorieArticle : string[]= [];
+        articleCategories.forEach((article: Article) => {
+          if(!listCategorieArticle.includes(article.categorie)){
+            listCategorieArticle.push(article.categorie);
+          }
+          
+        })
+        this.Categories = listCategorieArticle;
+        console.log("liste categorie",this.Categories);
+    });
 
     console.log("récupere le storage",this.gestionArticle.MesProduits);
 
@@ -48,7 +59,7 @@ export class Tab3Page {
   this.montant = price;
 })
 
-  }
+}
 
 ngAfterViewInit(){
   this.gestionArticle.getArticles().then((ele) => {
@@ -78,7 +89,7 @@ ngAfterViewInit(){
    * variable  de présnce dans la liste
    */
   addingListtoBuyOrDelete(article: Article) {
-    this.gestionArticle.addListToBuy(article)
+    this.gestionArticle.addListOrDeleteToBuy(article)
   }
 
   /**
