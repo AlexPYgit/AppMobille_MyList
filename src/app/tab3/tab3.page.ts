@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../models/article';
-import { GestionArticlesService } from '../service/gestion-articles.service';
+import { GestionArticlesService } from '../service/articles-service/gestion-articles.service';
 import { Observable } from 'rxjs';
+import { RefreshService } from '../service/refresh-service/refresh.service';
 
 
 
@@ -25,25 +26,24 @@ export class Tab3Page {
 
   articles$ ?:Observable<Article[]>
 
-  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
-
-    /**
-     * appelle la liste catégories du service gestion aticle
-     */
-
-    this.Categories = this.gestionArticle.Categories;
-
-    this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
-
-    this.articles$ = this.gestionArticle.articles$;
-
+  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private refreshService : RefreshService) {
   }
 
 ngOnInit(){
+  
+  this.Categories = this.gestionArticle.Categories;
 
+  this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
 
- 
+  this.articles$ = this.gestionArticle.articles$;
+
   console.log("le montant :", this.montantOfTheshopping());
+
+}
+
+ngAfterViewInit(){
+  this.articles$ = this.gestionArticle.articles$;
+
 }
 
 ionViewWillEnter(): void {

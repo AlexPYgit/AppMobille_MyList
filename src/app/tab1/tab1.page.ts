@@ -1,7 +1,10 @@
 import { Component, Input, } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { GestionArticlesService } from '../service/gestion-articles.service';
+import { GestionArticlesService } from '../service/articles-service/gestion-articles.service';
 import { Article } from '../models/article';
+import { Observable } from 'rxjs';
+import { ListToBuyService } from '../service/listToBuy-service/list-to-buy.service';
+import { RefreshService } from '../service/refresh-service/refresh.service';
 
 
 
@@ -16,9 +19,26 @@ export class Tab1Page {
   Montant: number = 0;
   indeterminate: boolean = false;
 
-  constructor(private platform: Platform, private gestionArticle: GestionArticlesService) {
+  articles$ ?:Observable<Article[]>
+
+
+  constructor(private listToBuyService : ListToBuyService, private gestionArticle: GestionArticlesService, private refreshService :RefreshService) {
     this.ionViewWillEnter()
   }
+
+  ngOnInit(){
+    this.listToBuyService.articles$.subscribe(data => 
+    this.ListArticle = data
+    // console.log("article à acheter ",data)
+    )
+
+    this.refreshService.state$.subscribe(refresh => {
+      if(refresh){
+        this.listToBuyService.loadArticles();
+      }
+    })
+
+  } 
 
   /**
    * récupère les article mit dans la list de course
@@ -48,12 +68,16 @@ export class Tab1Page {
     return this.Montant;
   }
 
+
+
   //retire l'article de la liste si la checkbox est coché
   onIndeterminateChange(event: any, artcile: Article) {
+  
+    // this.listToBuyService.deleteArticleToListToBuy(artcile.id)
     this.gestionArticle.inList(artcile)
-    console.log('La variable indeterminate a changé :', event);
-    this.indeterminate = !event;
-    this.ionViewWillEnter()
+    // this.indeterminate = !event;
+    // console.log('La variable indeterminate a changé :', event);
+    // this.ionViewWillEnter()
   }
 
 }

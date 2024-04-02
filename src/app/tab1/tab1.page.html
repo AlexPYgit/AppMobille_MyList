@@ -14,10 +14,8 @@
   <ion-list [inset]="true">
     <div *ngIf="ListArticle.length !== 0 ">
       <ion-item *ngFor="let articles of ListArticle">
-        <ion-checkbox [(ngModel)]="indeterminate" (ngModelChange)="onIndeterminateChange($event, articles)" slot="start"
-          aria-label="Toggle task completion"> </ion-checkbox>
         <ion-grid>
-          <ion-row>
+          <ion-row  (click)="onIndeterminateChange($event, articles)">
             <ion-col>
               <ion-text> {{articles.name}} </ion-text>
             </ion-col>

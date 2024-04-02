@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../models/article';
+import { Article } from '../../models/article';
 import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { CategorieArticleService } from './categorie-article.service';
+import { CategorieArticleService } from '../categorie-service/categorie-article.service';
 import { BehaviorSubject } from 'rxjs';
+import { RefreshService } from '../refresh-service/refresh.service';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class GestionArticlesService {
   private articlesSubject: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
   public articles$ = this.articlesSubject.asObservable();
 
-  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
+  constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService,private refreshService : RefreshService) {
 
    this.Categories = categorieService.getCategory(this.MesProduits);
 
@@ -75,12 +76,22 @@ export class GestionArticlesService {
     this.MesProduits.push(article);
     this.categorieService.getCategory(this.MesProduits);
     this.saveArticle(article);
+    
+    this.loadArticles();
+    // this.refreshService.updateState(true);
   }
 
   /**
  * persistence on mobille with préférence capactior
  */
   async saveArticle(article: Article) {
+    this.MesProduits = this.MesProduits.map(articleStock => {
+      if(article.id === articleStock.id){
+        return article;
+      }else{
+       return articleStock;
+      }
+    })
     await Preferences.set({
       key: 'articles',
       value: JSON.stringify(this.MesProduits)
@@ -95,6 +106,10 @@ export class GestionArticlesService {
     this.MesProduits =  this.MesProduits.filter(article => article.id !== id);
     console.log(this.MesProduits)
     this.saveArticle(this.article);
+
+    this.loadArticles();
+    // this.refreshService.updateState(true);
+
   }
   /**
    * update la variable inList si l'article est dans la liste ou non
@@ -102,8 +117,12 @@ export class GestionArticlesService {
   inList(article: Article) {
     let articleUpadte = new Article();
     articleUpadte = { ...article, isInListToBuy: article.isInListToBuy = !article.isInListToBuy }
+    console.log("article plus a chaeter ",articleUpadte)
 
     this.saveArticle(articleUpadte);
+
+    this.loadArticles();
+    this.refreshService.updateState(true);
   }
 }
 
