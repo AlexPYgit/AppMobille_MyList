@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Confirmation de suppression</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelDelete()">Annuler</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        Êtes-vous sûr de vouloir supprimer cet article ?
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <div class="modal-buttons">
+    <ion-button expand="block" color="danger" (click)="confirmDelete()" (click)="presentToast('top', 'supprimé de')">Supprimer</ion-button>
+  </div>
+</ion-content>

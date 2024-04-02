@@ -7,10 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ArticleComponent } from './component/article/article.component';
 import { FormsModule } from "@angular/forms";
+import { DeleteConfirmationModalComponentComponent } from './delete-confirmation-modal-component/delete-confirmation-modal-component.component';
 
 
 @NgModule({
-  declarations: [AppComponent, ArticleComponent,],
+  declarations: [AppComponent, ArticleComponent,DeleteConfirmationModalComponentComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }],
   bootstrap: [AppComponent, ArticleComponent],

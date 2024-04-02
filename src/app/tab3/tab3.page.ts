@@ -1,4 +1,4 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ArticleComponent } from '../component/article/article.component';
@@ -6,7 +6,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../models/article';
 import { GestionArticlesService } from '../service/articles-service/gestion-articles.service';
 import { Observable } from 'rxjs';
-import { RefreshService } from '../service/refresh-service/refresh.service';
+import { DeleteConfirmationModalComponentComponent } from '../delete-confirmation-modal-component/delete-confirmation-modal-component.component';
 
 
 
@@ -17,7 +17,6 @@ import { RefreshService } from '../service/refresh-service/refresh.service';
 })
 export class Tab3Page {
 
-  article?: Article;
   Categories: Array<string> = [];
   MesProduits: Array<Article> = [];
   selectedCategory: string = "";
@@ -26,24 +25,13 @@ export class Tab3Page {
 
   articles$ ?:Observable<Article[]>
 
-  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private refreshService : RefreshService) {
+  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
   }
 
 ngOnInit(){
-  
   this.Categories = this.gestionArticle.Categories;
-
   this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
-
   this.articles$ = this.gestionArticle.articles$;
-
-  console.log("le montant :", this.montantOfTheshopping());
-
-}
-
-ngAfterViewInit(){
-  this.articles$ = this.gestionArticle.articles$;
-
 }
 
 ionViewWillEnter(): void {
@@ -68,14 +56,6 @@ ionViewWillEnter(): void {
    */
    montantOfTheshopping() : number {
         this.montant = 0;
-
-      // this.gestionArticle.getArticles().forEach(element => {
-      //   if (element.isInListToBuy && element.price) {
-      //     console.log(element)
-      //     this.montant = Number( this.montant) + Number(element.price)
-      //   }
-      // })
-
       return this.montant;
     }
 
@@ -90,16 +70,29 @@ ionViewWillEnter(): void {
   /**
    * Supprime un article
    */
-  deleteArticle(idArticle: number) {
-    this.gestionArticle.deleteArticle(idArticle);
-    console.log("id de l'article suprimmer", idArticle)
-    this.filteredArticles = this.gestionArticle.MesProduits;
+  async deleteArticle(articleId: number) {
+    const modal = await this.modalController.create({
+      component: DeleteConfirmationModalComponentComponent,
+      componentProps: { articleId: articleId }
+    });
 
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data && data.confirmDelete) {
+       this.gestionArticle.deleteArticle(articleId);
+    console.log("id de l'article suprimmer", articleId)
+    this.filteredArticles = this.gestionArticle.MesProduits;
+      console.log('Suppression confirmée pour l\'article avec ID:', articleId);
+    } else {
+      // Annuler la suppression
+      console.log('Suppression annulée pour l\'article avec ID:', articleId);
+    }
   }
 
-  /**
-   * Manage to toast 
-   */
+  // /**
+  //  * Manage to toast 
+  //  */
   async presentToast(position: 'top' | 'middle' | 'bottom', action : string) {
     const toast = await this.toastController.create({
       message: `Article ${action} la liste`,
@@ -155,4 +148,6 @@ ionViewWillEnter(): void {
     const value = event.target.value;
     article.number = value;
   }
+
+
 }
