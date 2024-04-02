@@ -5,6 +5,7 @@ import { ArticleComponent } from '../component/article/article.component';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Article } from '../models/article';
 import { GestionArticlesService } from '../service/gestion-articles.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -22,6 +23,7 @@ export class Tab3Page {
   filteredArticles: Article[] = [];
   montant = 0
 
+  articles$ ?:Observable<Article[]>
 
   constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
 
@@ -33,10 +35,13 @@ export class Tab3Page {
 
     this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
 
+    this.articles$ = this.gestionArticle.articles$;
 
   }
 
 ngOnInit(){
+
+
  
   console.log("le montant :", this.montantOfTheshopping());
 }
@@ -64,12 +69,12 @@ ionViewWillEnter(): void {
    montantOfTheshopping() : number {
         this.montant = 0;
 
-      this.gestionArticle.getArticles().forEach(element => {
-        if (element.isInListToBuy && element.price) {
-          console.log(element)
-          this.montant = Number( this.montant) + Number(element.price)
-        }
-      })
+      // this.gestionArticle.getArticles().forEach(element => {
+      //   if (element.isInListToBuy && element.price) {
+      //     console.log(element)
+      //     this.montant = Number( this.montant) + Number(element.price)
+      //   }
+      // })
 
       return this.montant;
     }

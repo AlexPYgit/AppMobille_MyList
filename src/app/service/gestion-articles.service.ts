@@ -3,6 +3,7 @@ import { Article } from '../models/article';
 import { Preferences } from '@capacitor/preferences';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CategorieArticleService } from './categorie-article.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -17,31 +18,15 @@ export class GestionArticlesService {
   MesArticlePourLesCourse: Array<Article> = [];
   idArticle: number = 0;
 
-
-  ListArticleparDefaut: any = [
-    { produitName: "riz", prix: 3, type: "alimentaire", id: 0, inList: true, quantity: 1 },
-    { produitName: "pâte", prix: 1.5, type: "alimentaire", id: 1, inList: false, quantity: 1 },
-    // { produitName: "oignons", prix: 3, type: "alimentaire", id: 2, inList: false, quantity: 1 },
-    // { produitName: "dentifrisse", prix: 2.5, type: "hygiène", id: 3, inList: false, quantity: 1 },
-    // { produitName: "poel", prix: 20, type: "cuisine", id: 4, inList: false, quantity: 0 },
-  ]
+  private articlesSubject: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>([]);
+  public articles$ = this.articlesSubject.asObservable();
 
   constructor(private formBuilder: FormBuilder, private categorieService: CategorieArticleService) {
 
-    //Enregistre une liste de produit par defauts en mémoire
-    this.ListArticleparDefaut.forEach((element: { produitName: String; prix: number; type: string; id: number, inList: boolean, quantity: number }) => {
-      this.article = new Article()
-      this.article.name = element.produitName,
-      this.article.price = element.prix,
-      this.article.categorie = element.type,
-      this.article.id = element.id,
-      this.article.isInListToBuy = element.inList,
-      this.article.quantity = element.quantity,
-      this.MesProduits.push(this.article)
-      this.saveArticle(this.article);
-    })
+   this.Categories = categorieService.getCategory(this.MesProduits);
 
-    this.Categories = categorieService.getCategory(this.MesProduits);
+    this.loadArticles();
+
   }
 
   /**
@@ -53,13 +38,28 @@ export class GestionArticlesService {
     categorie: new FormControl(this.article.name),
   })
 
+  async loadArticles() {
+    try {
+      const preferencesData = await Preferences.get({ key: 'articles' });
+
+      if (preferencesData && preferencesData.value) {
+        const articles: Article[] = JSON.parse(preferencesData.value);
+        this.MesProduits = articles;
+        this.articlesSubject.next(articles);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   /**
    * use by Tab3 on ngInit
    * @returns a list Artilce
    */
-  getArticles(): Array<Article> {
-    return this.MesProduits
+  async getArticles(): Promise<Article[]> {
+    return this.articlesSubject.value;
   }
+
 
   addArticle(article: Article) {
     //on récupère l'id le plus grand des produit existant
@@ -78,17 +78,14 @@ export class GestionArticlesService {
   }
 
   /**
-   * permet de mofifier un article existant
-   */
-  // updateArticle(article: Article) {
-  //   console.log("le new article :", article, "mes produit", this.MesProduits)
-  //   let idProd = article.id;
-  //   console.log("l'idProd :", idProd)
-  //   if (idProd > 0 - 1) {
-  //     this.MesProduits[idProd] = article;
-  //     this.saveArticle(article);
-  //   }
-  // }
+ * persistence on mobille with préférence capactior
+ */
+  async saveArticle(article: Article) {
+    await Preferences.set({
+      key: 'articles',
+      value: JSON.stringify(this.MesProduits)
+    })
+  }
 
   /**
    * Supprime un artcile de la liste des articles
@@ -99,7 +96,6 @@ export class GestionArticlesService {
     console.log(this.MesProduits)
     this.saveArticle(this.article);
   }
-
   /**
    * update la variable inList si l'article est dans la liste ou non
    */
@@ -109,17 +105,6 @@ export class GestionArticlesService {
 
     this.saveArticle(articleUpadte);
   }
-
-  /**
- * persistence on mobille with préférence capactior
- */
-  async saveArticle(article: Article) {
-    await Preferences.set({
-      key: 'artilces',
-      value: JSON.stringify(this.MesProduits)
-    })
-  }
-
 }
 
 

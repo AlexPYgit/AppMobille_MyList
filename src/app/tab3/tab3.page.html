@@ -21,8 +21,9 @@
 </div>
 <ion-content color="light">
   <ion-list [inset]="true">
-    <ion-item *ngFor="let Produit of filteredArticles">
-      <ion-grid>
+    <ion-item *ngFor="let Produit of articles$ | async">
+      <!-- <ion-item *ngFor="let Produit of filteredArticles"> -->
+        <ion-grid>
         <ion-row>
           <ion-col size="2">
             <div *ngIf="!Produit.isInListToBuy">
