@@ -39,9 +39,9 @@ export class ArticleComponent implements OnInit {
      * get the data of the article from the liste for show in the modal
      */
     this.paramsForm = this.formBuilder.group({
-      name: [this.article.name = articleData.name],
-      price: [this.article.price = articleData.price],
-      categorie: [this.article.categorie = articleData.categorie]
+      name: [this.article.name = articleData.name, Validators.required],
+      price: [this.article.price = articleData.price,Validators.required],
+      categorie: [this.article.categorie = articleData.categorie,Validators.required]
     })
   }
 

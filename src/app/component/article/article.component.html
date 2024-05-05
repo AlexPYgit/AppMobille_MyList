@@ -9,17 +9,20 @@
   <form [formGroup]="paramsForm" (ngSubmit)="soumettreFormulaire()">
     <div>
       <label>Nom de l'article </label>
-      <input formControlName="name" required placeholder="Banane">
+      <input formControlName="name" required placeholder="Banane" >
+    <p *ngIf="paramsForm.get('name')" class="error-message">Le nom de l'article est obligatoire.</p>
     </div>
     <div>
       <label>Prix</label>
-      <input formControlName="price" placeholder="0">
+      <input formControlName="price" placeholder="0" type="number" required>
+      <p *ngIf="paramsForm.get('price')" class="error-message">Le prix est obligatoire.</p>
     </div>
     <div>
       <label>Catégorie </label>
-      <input formControlName="categorie" placeholder="Fruit">
+      <input formControlName="categorie" placeholder="Fruit" required>
+      <p *ngIf="paramsForm.get('categorie')" class="error-message">La catégorie est obligatoire.</p>
     </div>
-    <button class="addArticle" type="submit" expand="full"> {{nameArticle !== "" ? "Mettre à jour":"Ajouter votre article" }}</button>
+    <button class="addArticle" type="submit" expand="full" [disabled]="!paramsForm.valid"> {{nameArticle !== "" ? "Mettre à jour":"Ajouter votre article" }}</button>
     <button (click)="close()"><div  class="noAdd" > Ne pas ajouter d'article</div></button>
   </form>
 </content>

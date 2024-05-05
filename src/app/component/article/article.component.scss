@@ -1,3 +1,8 @@
+label{
+    color: #347d61;
+    font-weight: bold;
+}
+
 .style_AddArticle {
     display: flex;
     justify-content: center;
@@ -25,8 +30,8 @@ form{
 
 input {
     width: 200px;
-    color: rgb(14, 15, 15);
-    background-image: linear-gradient(to right, #82cab085, #75c0e075);
+    color: rgb(10, 46, 46);
+    background-image: linear-gradient(to right, #82cab085, #93c9e075);
     border-radius: 10px;
     margin: 20px;
     border: none;

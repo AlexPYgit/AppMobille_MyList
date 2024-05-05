@@ -4,10 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
 import { Tab3PageRoutingModule } from './tab3-routing.module';
-import { FormComponent } from '../form/form.component';
 
 @NgModule({
-  declarations: [Tab3Page, FormComponent],
+  declarations: [Tab3Page],
   imports: [
     IonicModule,
     CommonModule,
