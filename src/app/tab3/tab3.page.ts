@@ -7,6 +7,7 @@ import { Article } from '../models/article';
 import { GestionArticlesService } from '../service/articles-service/gestion-articles.service';
 import { Observable } from 'rxjs';
 import { DeleteConfirmationModalComponentComponent } from '../delete-confirmation-modal-component/delete-confirmation-modal-component.component';
+import { CategorieArticleService } from '../service/categorie-service/categorie-article.service';
 
 
 
@@ -17,7 +18,7 @@ import { DeleteConfirmationModalComponentComponent } from '../delete-confirmatio
 })
 export class Tab3Page {
 
-  Categories: Array<string> = [];
+  categories: Array<string> = [];
   MesProduits: Array<Article> = [];
   selectedCategory: string = "";
   filteredArticles: Article[] = [];
@@ -25,13 +26,31 @@ export class Tab3Page {
 
   articles$ ?:Observable<Article[]>
 
-  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService) {
+  constructor( private toastController: ToastController, private modalController: ModalController, private gestionArticle: GestionArticlesService, private categoryService : CategorieArticleService) {
   }
-
-ngOnInit(){
-  this.Categories = this.gestionArticle.Categories;
-  this.filteredArticles = this.MesProduits = this.gestionArticle.MesProduits;
+ 
+async ngOnInit(){
   this.articles$ = this.gestionArticle.articles$;
+  this.articles$.subscribe(articles => {
+    this.MesProduits = articles;
+    this.filteredArticles = articles;
+  });
+
+  this.categories = await this.categoryService.getCategories();
+}
+
+ngDoCheck(): void {
+  const articlesInList = this.MesProduits.filter(article => article.isInListToBuy);
+  const newMontant = articlesInList.reduce((total, article) => {
+    if (typeof article.price === 'number' && typeof article.quantity === 'number') {
+      return total + article.price * article.quantity;
+    } else {
+      return total;
+    }
+  }, 0);
+  if (newMontant !== this.montant) {
+    this.montant = newMontant;
+  }
 }
 
 ionViewWillEnter(): void {
@@ -41,15 +60,14 @@ ionViewWillEnter(): void {
   /**
    *filtre des categories 
    */
-  handleCategory() {
-    if (this.selectedCategory != "All") {
-      this.filteredArticles = this.MesProduits.filter(produit => produit.categorie === this.selectedCategory);
-    } else {
+  handleCategory(event :any) {
+    const selectedCategory = event.detail.value;
+    if (selectedCategory === 'All') {
       this.filteredArticles = [...this.MesProduits];
+    } else {
+      this.filteredArticles = this.MesProduits.filter(article => article.categorie === selectedCategory);
     }
   }
-
-  ///END CATEGORIES
 
     /**
    * récupère les article mit dans la list de course
