@@ -12,7 +12,7 @@ import { DeleteConfirmationModalComponentComponent } from './delete-confirmation
 
 @NgModule({
   declarations: [AppComponent, ArticleComponent,DeleteConfirmationModalComponentComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ReactiveFormsModule, FormsModule, ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }],
   bootstrap: [AppComponent, ArticleComponent],
 })

@@ -63,6 +63,7 @@ export class GestionArticlesService {
 
 
   addArticle(article: Article) {
+   
     //on récupère l'id le plus grand des produit existant
     let id = 0;
     this.MesProduits.forEach(produit => {
